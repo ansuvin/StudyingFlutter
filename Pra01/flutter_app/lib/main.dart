@@ -6,31 +6,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "First app",
-      theme: ThemeData(
-        primarySwatch: Colors.blue
-      ),
-      home: MyHomePage(),
+      title: "Charactor card",
+      home: Grade(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class Grade extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber[600],
       appBar: AppBar(
-        title: Text("처음 플러터 함!"),
+        title: Text("BBANTO"),
+        centerTitle: true,
+        backgroundColor: Colors.amber[700],
+        elevation: 0.0,
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30, 40, 0, 0),
         child: Column(
-          children: <Widget>[
-            Text("Hello"),
-            Text("Hello"),
-            Text("Hello"),
+          children: [
+            Text("Name",
+            style: TextStyle(
+              color: Colors.white,
+              letterSpacing: 2,
+            ),)
           ],
         ),
-      ),
+      )
     );
   }
 }
