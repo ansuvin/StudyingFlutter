@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,36 +19,39 @@ class MyApp extends StatelessWidget {
 
 class MyPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context2) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Snack Bar"),
-        centerTitle: true,
+        title: Text("First page"),
       ),
-      body: MySnackBar(),
+      body: Center(
+        child: RaisedButton(
+          child: Text("Co to the Second page"),
+          onPressed: (){
+            Navigator.push(context2, MaterialPageRoute(
+                builder: (context) => SecondPage()
+            ));
+          },
+        ),
+      ),
     );
   }
 }
 
-class MySnackBar extends StatelessWidget {
+class SecondPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        child: Text("show me"),
-        onPressed: () {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Hello",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-              ),),
-              backgroundColor: Colors.teal,
-              duration: Duration(milliseconds: 1000),
-            ),
-          );
-        },
+  Widget build(BuildContext ctx) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second page"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          child: Text("Co to the First page"),
+          onPressed: (){
+            Navigator.pop(ctx);
+          },
+        ),
       ),
     );
   }
