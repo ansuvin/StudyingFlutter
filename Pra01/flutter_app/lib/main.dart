@@ -19,18 +19,17 @@ class MyApp extends StatelessWidget {
 
 class MyPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context2) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("First page"),
+        title: Text("Toast Message"),
+        centerTitle: true,
       ),
       body: Center(
         child: RaisedButton(
-          child: Text("Co to the Second page"),
+          child: Text("button"),
           onPressed: (){
-            Navigator.push(context2, MaterialPageRoute(
-                builder: (context) => SecondPage()
-            ));
+            flutterToast();
           },
         ),
       ),
@@ -38,21 +37,12 @@ class MyPage extends StatelessWidget {
   }
 }
 
-class SecondPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext ctx) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second page"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          child: Text("Co to the First page"),
-          onPressed: (){
-            Navigator.pop(ctx);
-          },
-        ),
-      ),
-    );
-  }
+void flutterToast() {
+  Fluttertoast.showToast(
+      msg: "Flutter",
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.redAccent,
+      fontSize: 20,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT);
 }
