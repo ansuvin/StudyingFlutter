@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_app/ScreenA.dart';
+import 'package:flutter_app/ScreenB.dart';
+import 'package:flutter_app/ScreenC.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,37 +14,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: MyPage(),
+      initialRoute: "/",
+      routes: {
+        "/" : (context) => ScreenA(),
+        "/b" : (context) => ScreenB(),
+        "/c" : (context) => ScreenC(),
+      },
     );
   }
-}
-
-class MyPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Toast Message"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: RaisedButton(
-          child: Text("button"),
-          onPressed: (){
-            flutterToast();
-          },
-        ),
-      ),
-    );
-  }
-}
-
-void flutterToast() {
-  Fluttertoast.showToast(
-      msg: "Flutter",
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.redAccent,
-      fontSize: 20,
-      textColor: Colors.white,
-      toastLength: Toast.LENGTH_SHORT);
 }
