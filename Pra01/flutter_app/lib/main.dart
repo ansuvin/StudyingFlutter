@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ScreenA.dart';
-import 'package:flutter_app/ScreenB.dart';
-import 'package:flutter_app/ScreenC.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  var count = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,12 +12,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      initialRoute: "/",
-      routes: {
-        "/" : (context) => ScreenA(),
-        "/b" : (context) => ScreenB(),
-        "/c" : (context) => ScreenC(),
-      },
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("$count")
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            count++;
+            print("$count");
+          },
+        ),
+      ),
     );
   }
 }
