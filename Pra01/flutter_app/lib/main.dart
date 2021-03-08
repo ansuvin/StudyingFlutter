@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp>{
   var count = 0;
   @override
   Widget build(BuildContext context) {
@@ -18,15 +25,19 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("$count")
+              Text("$count"),
+              Checkbox(value: false,
+                  onChanged: (bool value) {})
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            count++;
-            print("$count");
+            setState(() {
+              count++;
+              print("$count");
+            });
           },
         ),
       ),
