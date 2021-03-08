@@ -26,19 +26,29 @@ class MyAppState extends State<MyApp>{
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("$count"),
-              Checkbox(value: false,
-                  onChanged: (bool value) {})
+              SizedBox(height: 30,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FloatingActionButton(onPressed: () {
+                    setState(() {
+                      count--;
+                      print(count);
+                    });
+                  },
+                  child: Icon(Icons.remove),),
+                  SizedBox(width: 30,),
+                  FloatingActionButton(onPressed: () {
+                    setState(() {
+                      count++;
+                      print(count);
+                    });
+                  },
+                  child: Icon(Icons.add),)
+                ],
+              )
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            setState(() {
-              count++;
-              print("$count");
-            });
-          },
         ),
       ),
     );
