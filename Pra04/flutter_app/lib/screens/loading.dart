@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:flutter_app/data/my_location.dart';
+import 'package:flutter_app/data/network.dart';
+import 'package:flutter_app/screens/weather_screen.dart';
+
+const apikey = "3b28825fd5bbad49ff82584b36b566b3";
 
 class Loading extends StatefulWidget {
   @override
@@ -10,32 +14,29 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
+  double longitude;
+  double latitude;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getLociation();
-    fetchData();
+    getLocation();
   }
 
-  void getLociation() async {
-    try {
-      Position position = await Geolocator.
-      getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      print(position);
-    } catch(e) {
-      print("인터넷 연결에 문제가 있습니다.");
-    }
-  }
+  void getLocation() async {
+    MyLocation myLocation = MyLocation();
+    await myLocation.getMyCurrentLocation();
+    latitude = myLocation.latitude;
+    longitude = myLocation.longitude;
+    print("$latitude $longitude");
 
-  void fetchData() async {
-    var url = Uri.https("jsonplaceholder.typicode.com", "/posts");
-    http.Response response = await http.get(url);
-    if(response.statusCode == 200) {
-      String jsonData = response.body;
-      var myJson = jsonDecode(jsonData)[0]['title'];
-      print(myJson);
-    }
+    Network network = Network("jsonplaceholder.typicode.com", "/posts");
+
+    var data = await network.getJsonData();
+
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+      return WeatherScreen(parseData: data);
+    }));
   }
 
   final items = List.generate(10,(i) => i).toList();
@@ -44,25 +45,15 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: GridView.count(
-          crossAxisCount: 4,
-          children: items.map((e) => Container(
-            child: Text("$e"),
-            width: 100,
-            height: 100,
-            color: Colors.blue,
-            margin: EdgeInsets.all(16),
-          )).toList(),
-        )
-        // RaisedButton(
-        //   onPressed: null,
-        //   child: Text("Get my location",
-        //   style: TextStyle(
-        //     color: Colors.white,
-        //   ),
-        //   ),
-        //   color: Colors.blue,
-        // ),
+        child: RaisedButton(
+          onPressed: null,
+          child: Text("Get my location",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+          ),
+          color: Colors.blue,
+        ),
       ),
     );
   }
