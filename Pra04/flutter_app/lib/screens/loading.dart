@@ -34,9 +34,9 @@ class _LoadingState extends State<Loading> {
 
     var data = await network.getJsonData();
 
-    Navigator.push(context, MaterialPageRoute(builder: (context){
-      return WeatherScreen(parseData: data);
-    }));
+    // Navigator.push(context, MaterialPageRoute(builder: (context){
+    //   return WeatherScreen(parseData: data);
+    // }));
   }
 
   final items = List.generate(10,(i) => i).toList();
@@ -44,6 +44,13 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: '메뉴3', title: ),
+          BottomNavigationBarItem(icon: Icon(Icons.info), label: '메뉴'),
+          BottomNavigationBarItem(icon: Icon(Icons.error), label: '메뉴2')
+        ],
+      ),
       body: Center(
         child: RaisedButton(
           onPressed: null,
