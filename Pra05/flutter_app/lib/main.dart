@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.blue
-      ),
+      theme: ThemeData(primaryColor: Colors.blue),
       home: MyHomePage(),
     );
   }
@@ -37,13 +35,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("복잡한 UI",
-        style: TextStyle(
-          color: Colors.black
-        ),),
+        title: Text(
+          "복잡한 UI",
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
         actions: [
-          IconButton(icon: Icon(Icons.add, color: Colors.black,), onPressed: (){})
+          IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Colors.black,
+              ),
+              onPressed: () {})
         ],
       ),
       body: _pages[_index],
@@ -57,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "홈"),
           BottomNavigationBarItem(icon: Icon(Icons.assignment), label: "이용서비스"),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "내 정보"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle), label: "내 정보"),
         ],
       ),
     );
