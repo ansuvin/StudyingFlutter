@@ -1,15 +1,38 @@
-import 'dart:html';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
 class Todo {
-  bool isDone = false;
-  String title;
+  bool isDone;
+  final String title;
+  final int userId;
 
-  Todo(this.title, {this.isDone = false});
+  Todo({this.title, this.isDone = false, this.userId});
+
+  factory Todo.fromJson(Map<String, dynamic> json) {
+    return Todo(
+      title: json['title'],
+      userId: json["id"],
+      isDone: json['isDone']
+    );
+  }
+}
+
+
+Future<dynamic> getJsonData() async {
+ // final response = await http.get(Uri.https("ec8391738234.ngrok.io", "/api/read_list"));
+  final response = await http.get(Uri.https("jsonplaceholder.typicode.com", "/posts"));
+
+  if(response.statusCode == 200) {
+      var parsingData = jsonDecode(response.body);
+    return parsingData;
+  } else {
+    throw Exception("Failed to load Todo");
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -35,6 +58,20 @@ class _TodoListPageState extends State<TodoListPage> {
   var _todoController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    getList();
+  }
+
+  void getList() async {
+    var data = await getJsonData();
+
+    for(int i=0; i<10; i++) {
+      _items.add(Todo(title: data[i]['title'], isDone: false, userId: data[i]['userId']));
+    }
+  }
+
+  @override
   void dispose() {
     _todoController.dispose();
     super.dispose();
@@ -56,30 +93,19 @@ class _TodoListPageState extends State<TodoListPage> {
                     child: TextField(
                       controller: _todoController,
                     )),
-                RaisedButton(child: Text("추가"), onPressed: () => _addTodo(Todo(_todoController.text)))
+                RaisedButton(child: Text("추가"), onPressed: () => _addTodo(Todo(title: _todoController.text)))
               ],
             ),
-            StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instanceFor(app: app),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return CircularProgressIndicator();
-                }
-                final documents = snapshot.data.docs;
-                return Expanded(
-                    child: ListView(
-                      children: documents.map((doc) => _buildItemWidget(doc)).toList(),
-                    ));
-              }
-            )
+            Expanded(child: ListView(
+              children: _items.map((todo) => _buildItemWidget(todo)).toList(),
+            ))
           ],
         ),
       ),
     );
   }
 
-  Widget _buildItemWidget(DocumentSnapshot doc) {
-    final todo = Todo(doc['title'], isDone: doc['isDone']);
+  Widget _buildItemWidget(Todo todo) {
     return ListTile(
       onTap: () => _toggleTodo(todo),
       title: Text(
