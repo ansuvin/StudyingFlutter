@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screans/current_position.dart';
 import 'screans/google_office.dart';
 
 void main() => runApp(MyApp());
@@ -8,7 +9,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      home: PraGoogleMap(),
+      home: CurrentPosition(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

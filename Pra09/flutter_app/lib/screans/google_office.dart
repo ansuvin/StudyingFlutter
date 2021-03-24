@@ -22,8 +22,8 @@ class _PraGoogleMapState extends State<PraGoogleMap> {
     return GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
-          target: const LatLng(0, 0),
-          zoom: 2
+          target: const LatLng(35.1429673038245, 126.80016737003288),
+          zoom: 10
       ),
       markers: _markers.values.toSet(),
     );
