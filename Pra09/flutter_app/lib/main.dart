@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'src/locations.dart' as locations;
+import 'screans/google_office.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,19 +13,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class PraGoogleMap extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _PraGoogleMapState createState() => _PraGoogleMapState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _PraGoogleMapState extends State<PraGoogleMap> {
-  @override
-  void initState() {
-    super.initState();
-    print("시작전");
-    getGoogleOffice();
-    print("끝");
-  }
+class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
@@ -34,44 +26,10 @@ class _PraGoogleMapState extends State<PraGoogleMap> {
       appBar: AppBar(
         title: Text("Google maps"),
       ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: const LatLng(0, 0),
-          zoom: 2
-        ),
-        markers: _markers.values.toSet(),
-      ),
+      body: Container()
     );
   }
 
-  final Map<String, Marker> _markers = {};
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    final googleOffices = await locations.getGoogleOffices();
-
-    setState(() {
-      _markers.clear();
-
-      for(final office in googleOffices.offices) {
-        final marker = Marker(markerId: MarkerId(office.name),
-        position: LatLng(office.lat, office.lng),
-        infoWindow: InfoWindow(
-          title: office.name,
-          snippet: office.address,
-        ),
-        );
-        _markers[office.name] = marker;
-        print(office.name);
-      }
-    });
-  }
-
-  Future<void> getGoogleOffice() async{
-    final gOffice = await locations.getGoogleOffices();
-    for (final office in gOffice.offices) {
-      print(office.name);
-    }
-  }
 }
 
