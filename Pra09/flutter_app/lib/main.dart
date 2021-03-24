@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screans/current_position.dart';
-import 'screans/google_office.dart';
+import 'file:///D:/StudyingFlutter/Pra09/flutter_app/lib/screans/maps/current_position.dart';
+import 'screans/maps/google_office.dart';
 
 void main() => runApp(MyApp());
 
