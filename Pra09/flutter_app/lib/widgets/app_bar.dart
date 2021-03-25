@@ -11,6 +11,7 @@ Widget buildAppBar(String title) {
         ),),
         backgroundColor: Colors.white,
         elevation: 2,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       preferredSize: Size.fromHeight(50));
 }

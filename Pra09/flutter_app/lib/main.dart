@@ -24,6 +24,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Container(
+                height: 120,
+                color: Colors.blue,
+              )
+            ],
+          ),
+        ),
         appBar: buildAppBar("custtom Appbar"),
         body: Center(
           child: RaisedButton(
