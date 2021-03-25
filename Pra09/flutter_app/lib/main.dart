@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screans/design/custom_dialog.dart';
+import 'widgets/app_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,9 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Google maps"),
-        ),
+        appBar: buildAppBar("custtom Appbar"),
         body: Center(
           child: RaisedButton(
             child: Text("show Dialog"),
