@@ -24,10 +24,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 final List<String> list = <String>["과일","포도","사과","살구","짜란"];
+var isTrue = false;
 
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _textController1 = TextEditingController();
   TextEditingController _textController2 = TextEditingController();
+
+  void _onHeartPressed() {
+    setState(() {
+      isTrue = !isTrue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,103 +68,110 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ));
   }
-}
 
-Widget buildItemCompany(BuildContext context, int index){
-  return Card(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18)
-    ),
-    elevation: 5,
-    margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
-    child: GestureDetector(
-      onTap: () {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) => CustomDialog(
-              msg: "${list[index]}. 업체명",
-              description: "${list[index]}. 소개",
-              buttonText: "이것은 버튼",
-            ));
-      },
-      child: Padding(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    "${list[index]}. 업체명",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900),
+  Widget buildItemCompany(BuildContext context, int index){
+    return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18)
+      ),
+      elevation: 5,
+      margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) => CustomDialog(
+                msg: "${list[index]}. 업체명",
+                description: "${list[index]}. 소개",
+                buttonText: "이것은 버튼",
+              ));
+        },
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "${list[index]}. 업체명",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900),
+                    ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.favorite_border_outlined,
-                    size: 28,
+                  IconButton(
+                    icon: isTrue ?
+                    Icon(
+                      Icons.favorite,
+                      size: 28,
+                      color: Colors.red,
+                    ):
+                    Icon(
+                      Icons.favorite_border_outlined,
+                      size: 28,
+                    ),
+                    onPressed: _onHeartPressed,
                   ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6, bottom: 6),
-              child: Text(
-                "${list[index]}. 이것은 회사 설명입니다.",
-                style: TextStyle(
-                    fontSize: 14, fontWeight: FontWeight.w500),
+                ],
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                      height: 22,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return buildItemTag(index.toString());
-                          })),
-                ),
-                Text(
-                  "평균: 2,500~3,000",
+              Padding(
+                padding: const EdgeInsets.only(top: 6, bottom: 6),
+                child: Text(
+                  "${list[index]}. 이것은 회사 설명입니다.",
                   style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
-                )
-              ],
-            )
-          ],
+                      fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                        height: 22,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return buildItemTag(index.toString());
+                            })),
+                  ),
+                  Text(
+                    "평균: 2,500~3,000",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget buildItemTag(String tag) {
-  return Container(
-    padding: EdgeInsets.fromLTRB(
-        5, 1, 5, 1),
-    margin: EdgeInsets.only(right: 8),
-    decoration: BoxDecoration(
-        borderRadius:
-        BorderRadius.circular(
-            10),
-        border: Border.all(
-          color: Colors.blue[400],
-        )),
-    child: Text("#${tag}.태그",
-    style: TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.w400
-    ),),
-  );
+  Widget buildItemTag(String tag) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(
+          5, 1, 5, 1),
+      margin: EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
+          borderRadius:
+          BorderRadius.circular(
+              10),
+          border: Border.all(
+            color: Colors.blue[400],
+          )),
+      child: Text("#${tag}.태그",
+        style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400
+        ),),
+    );
+  }
+
 }
