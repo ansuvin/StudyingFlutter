@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/company_vo.dart';
 import 'screans/design/custom_dialog.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/drawer.dart';
@@ -23,17 +24,34 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-final List<String> list = <String>["과일","포도","사과","살구","짜란"];
-var isTrue = false;
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController _textController1 = TextEditingController();
-  TextEditingController _textController2 = TextEditingController();
+  final List<String> list = <String>["과일", "포도", "사과", "살구", "짜란"];
+  var isTrue = false;
 
-  void _onHeartPressed() {
+  List<CompanyVO> compList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _listSetting();
+  }
+
+  _onHeartPressed(int index) {
     setState(() {
-      isTrue = !isTrue;
+      compList[index].isFavorite = !compList[index].isFavorite;
     });
+  }
+
+  void _listSetting() {
+    for (int i = 1; i <= 8; i++) {
+      compList.add(CompanyVO(name: "${i}. name",
+          content: "${i}. content",
+          tag: list,
+          minSalary: i*1000,
+          maxSalary: i*1000+500,
+          isFavorite: false));
+    }
   }
 
   @override
@@ -50,18 +68,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (BuildContext context) => CustomDialog(
-                            msg: "${_textController1.text}",
-                            description: "${_textController2.text}",
+                      builder: (BuildContext context) =>
+                          CustomDialog(
+                            msg: "title",
+                            description: "description",
                             buttonText: "이것은 버튼",
                           ));
                 },
               ),
               Expanded(
                 child: ListView.builder(
-                    itemCount: list.length,
+                    itemCount: compList.length,
                     itemBuilder: (context, index) {
-                      return buildItemCompany(context,index);
+                      return buildItemCompany(context, index);
                     }),
               )
             ],
@@ -69,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  Widget buildItemCompany(BuildContext context, int index){
+  Widget buildItemCompany(BuildContext context, int index) {
     return Card(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18)
@@ -81,11 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
           showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (BuildContext context) => CustomDialog(
-                msg: "${list[index]}. 업체명",
-                description: "${list[index]}. 소개",
-                buttonText: "이것은 버튼",
-              ));
+              builder: (BuildContext context) =>
+                  CustomDialog(
+                    msg: "${compList[index].name}. 업체명",
+                    description: "${compList[index].content}. 소개",
+                    buttonText: "이것은 버튼",
+                  ));
         },
         child: Padding(
           padding: EdgeInsets.all(15),
@@ -96,31 +116,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Expanded(
                     child: Text(
-                      "${list[index]}. 업체명",
+                      "${compList[index].name}. 업체명",
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w900),
                     ),
                   ),
                   IconButton(
-                    icon: isTrue ?
+                    icon: compList[index].isFavorite ?
                     Icon(
                       Icons.favorite,
                       size: 28,
                       color: Colors.red,
-                    ):
+                    ) :
                     Icon(
                       Icons.favorite_border_outlined,
                       size: 28,
                     ),
-                    onPressed: _onHeartPressed,
+                    onPressed: () => _onHeartPressed(index),
                   ),
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 6, bottom: 6),
                 child: Text(
-                  "${list[index]}. 이것은 회사 설명입니다.",
+                  "${compList[index].content}. 이것은 회사 설명입니다.",
                   style: TextStyle(
                       fontSize: 14, fontWeight: FontWeight.w500),
                 ),
@@ -135,11 +155,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             shrinkWrap: true,
                             itemCount: 5,
                             itemBuilder: (context, index) {
-                              return buildItemTag(index.toString());
+                              return buildItemTag(index);
                             })),
                   ),
                   Text(
-                    "평균: 2,500~3,000",
+                    "평균: ${compList[index].minSalary}~${compList[index].maxSalary}",
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -154,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildItemTag(String tag) {
+  Widget buildItemTag(int index) {
     return Container(
       padding: EdgeInsets.fromLTRB(
           5, 1, 5, 1),
@@ -166,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
           border: Border.all(
             color: Colors.blue[400],
           )),
-      child: Text("#${tag}.태그",
+      child: Text("#${compList[index].tag[index]}",
         style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w400
