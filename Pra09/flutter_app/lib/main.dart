@@ -23,6 +23,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+final List<String> list = <String>["과일","포도","사과","살구","짜란"];
+
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _textController1 = TextEditingController();
   TextEditingController _textController2 = TextEditingController();
@@ -50,9 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Expanded(
                 child: ListView.builder(
-                    itemCount: 5,
+                    itemCount: list.length,
                     itemBuilder: (context, index) {
-                      return buildItemCompany(context, index.toString());
+                      return buildItemCompany(context,index);
                     }),
               )
             ],
@@ -61,21 +63,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Widget buildItemCompany(BuildContext context, String title){
+Widget buildItemCompany(BuildContext context, int index){
   return Card(
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18)
     ),
     elevation: 5,
     margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
-    child: InkWell(
+    child: GestureDetector(
       onTap: () {
         showDialog(
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) => CustomDialog(
-              msg: "${title}. 업체명",
-              description: "${title}. 소개",
+              msg: "${list[index]}. 업체명",
+              description: "${list[index]}. 소개",
               buttonText: "이것은 버튼",
             ));
       },
@@ -88,7 +90,7 @@ Widget buildItemCompany(BuildContext context, String title){
               children: [
                 Expanded(
                   child: Text(
-                    "업체명",
+                    "${list[index]}. 업체명",
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w900),
@@ -106,7 +108,7 @@ Widget buildItemCompany(BuildContext context, String title){
             Padding(
               padding: const EdgeInsets.only(top: 6, bottom: 6),
               child: Text(
-                "이것은 회사 설명입니다.",
+                "${list[index]}. 이것은 회사 설명입니다.",
                 style: TextStyle(
                     fontSize: 14, fontWeight: FontWeight.w500),
               ),
@@ -115,7 +117,7 @@ Widget buildItemCompany(BuildContext context, String title){
               children: [
                 Expanded(
                   child: SizedBox(
-                      height: 20,
+                      height: 22,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
@@ -148,10 +150,14 @@ Widget buildItemTag(String tag) {
     decoration: BoxDecoration(
         borderRadius:
         BorderRadius.circular(
-            9),
+            10),
         border: Border.all(
           color: Colors.blue[400],
         )),
-    child: Text("#${tag}"),
+    child: Text("#${tag}.태그",
+    style: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400
+    ),),
   );
 }
