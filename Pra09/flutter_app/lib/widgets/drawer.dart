@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/button.dart';
 
-Widget buildDrawer() {
+Widget buildDrawer(BuildContext context) {
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
@@ -58,6 +58,7 @@ Widget buildDrawer() {
           leading: Icon(Icons.assignment),
           onTap: () {
             print("협약 업체로 가자");
+            Navigator.pushNamed(context, "/company");
           },
         ),
         ListTile(

@@ -14,7 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      home: MyHomePage(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => MyHomePage(),
+        "/company": (context) => SearchPage(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
@@ -59,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: buildDrawer(),
+        drawer: buildDrawer(context),
         appBar: buildAppBar("custom Appbar"),
         body: Center(
           child: Column(
