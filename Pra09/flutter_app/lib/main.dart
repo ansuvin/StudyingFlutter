@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/company_vo.dart';
+import 'package:flutter_app/screans/search_page.dart';
 import 'screans/design/custom_dialog.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/drawer.dart';
@@ -20,16 +21,17 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  final List<String> list = List.generate(10, (index) => "texto ${index}");
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> list = <String>["과일", "포도", "사과", "살구", "짜란"];
-  var isTrue = false;
 
   List<CompanyVO> compList = [];
+  final controller = TextEditingController();
 
   @override
   void initState() {
@@ -47,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (int i = 1; i <= 8; i++) {
       compList.add(CompanyVO(name: "${i}. name",
           content: "${i}. content",
-          tag: list,
+          tag: List.generate(5, (index) => "${i}.태그"),
           minSalary: i*1000,
           maxSalary: i*1000+500,
           isFavorite: false));
@@ -76,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ));
                 },
               ),
+
               Expanded(
                 child: ListView.builder(
                     itemCount: compList.length,
