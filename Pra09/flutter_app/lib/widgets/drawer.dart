@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/widgets/button.dart';
 
 Widget buildDrawer() {
   return Drawer(
@@ -130,88 +131,15 @@ Widget buildDrawer() {
           },
         ),
         Padding(
-          padding: EdgeInsets.only(top: 80, right: 20),
+          padding: EdgeInsets.only(top: 80, left: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xff4FB8F3),
-                          Color(0xff9342FA),
-                          Color(0xff2400FF)
-                        ]),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey[500],
-                          offset: Offset(2,4),
-                          blurRadius: 5,
-                          spreadRadius: 0.5
-                      )]
-                ),
-                width: 175,
-                height: 40,
-                child: FlatButton(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "마이페이지",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      )
-                    ],
-                  ),
-                  onPressed: () {},
-                ),
-              ),
+              makeGradientBtn(msg: "마이페이지", onPressed: () => print("마이페이지 눌림"), mode: 1, icon: Icon(Icons.person, color: Colors.white,)),
               SizedBox(
                 height: 8,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey[500],
-                          offset: Offset(2,4),
-                          blurRadius: 5,
-                          spreadRadius: 0.5
-                      )]
-                ),
-                width: 175,
-                height: 40,
-                child: FlatButton(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "로그아웃",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Icon(
-                        Icons.exit_to_app,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                  onPressed: () {},
-                ),
-              ),
+              makeBtn(msg: "로그아웃", onPressed: () => print("로그아웃 눌림"), mode: 1, icon: Icon(Icons.exit_to_app, color: Colors.white,))
             ],
           ),
         ),
