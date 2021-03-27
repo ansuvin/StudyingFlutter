@@ -95,6 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
+  bool selected = false;
+
   Widget buildItemCompany(BuildContext context, int index) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -104,6 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
       margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
       child: GestureDetector(
         onTap: () {
+          setState(() {
+            selected = !selected;
+          });
           showDialog(
               context: context,
               barrierDismissible: false,
@@ -122,11 +127,19 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      "${compList[index].name}. 업체명",
+                    child: AnimatedDefaultTextStyle(
+                      duration: const Duration(milliseconds: 1000),
                       style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900),
+                        color: selected ? Colors.red : Colors.black,
+                        fontWeight: selected ? FontWeight.w200 : FontWeight.w900,
+                        letterSpacing: selected ? 1 : 5
+                      ),
+                      child: Text(
+                        "${compList[index].name}. 업체명",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900),
+                      ),
                     ),
                   ),
                   IconButton(
