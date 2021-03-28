@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/company_vo.dart';
 import 'package:flutter_app/screans/search_page.dart';
+import 'package:flutter_app/widgets/drop_down_button.dart';
 import 'screans/design/custom_dialog.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/drawer.dart';
@@ -31,9 +32,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
-
   List<CompanyVO> compList = [];
   final controller = TextEditingController();
 
@@ -51,14 +50,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _listSetting() {
     for (int i = 1; i <= 8; i++) {
-      compList.add(CompanyVO(name: "${i}. name",
+      compList.add(CompanyVO(
+          name: "${i}. name",
           content: "${i}. content",
           tag: List.generate(5, (index) => "${i}.태그"),
-          minSalary: i*1000,
-          maxSalary: i*1000+500,
+          minSalary: i * 1000,
+          maxSalary: i * 1000 + 500,
           isFavorite: false));
     }
   }
+
+  void onSetState(String value) {
+    setState(() {
+      selectedValue = value;
+      print("onSetState: ${value}, ${selectedValue}");
+    });
+  }
+
+  var valueList = ["첫번째", "두번째", "세번째"];
+  var selectedValue = "첫번째";
 
   @override
   Widget build(BuildContext context) {
@@ -68,21 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: Column(
             children: [
-              RaisedButton(
-                child: Text("show Dialog"),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) =>
-                          CustomDialog(
-                            msg: "title",
-                            description: "description",
-                            buttonText: "이것은 버튼",
-                          ));
-                },
-              ),
-
+              makeDropDownBtn(
+                  valueList: valueList,
+                  selectedValue: selectedValue,
+                  onSetState: onSetState),
               Expanded(
                 child: ListView.builder(
                     itemCount: compList.length,
@@ -99,9 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget buildItemCompany(BuildContext context, int index) {
     return Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       elevation: 5,
       margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
       child: GestureDetector(
@@ -112,8 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (BuildContext context) =>
-                  CustomDialog(
+              builder: (BuildContext context) => CustomDialog(
                     msg: "${compList[index].name}. 업체명",
                     description: "${compList[index].content}. 소개",
                     buttonText: "이것은 버튼",
@@ -130,29 +126,28 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 1000),
                       style: TextStyle(
-                        color: selected ? Colors.red : Colors.black,
-                        fontWeight: selected ? FontWeight.w200 : FontWeight.w900,
-                        letterSpacing: selected ? 1 : 5
-                      ),
+                          color: selected ? Colors.red : Colors.black,
+                          fontWeight:
+                              selected ? FontWeight.w200 : FontWeight.w900,
+                          letterSpacing: selected ? 1 : 5),
                       child: Text(
                         "${compList[index].name}. 업체명",
                         style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w900),
+                            fontSize: 24, fontWeight: FontWeight.w900),
                       ),
                     ),
                   ),
                   IconButton(
-                    icon: compList[index].isFavorite ?
-                    Icon(
-                      Icons.favorite,
-                      size: 28,
-                      color: Colors.red,
-                    ) :
-                    Icon(
-                      Icons.favorite_border_outlined,
-                      size: 28,
-                    ),
+                    icon: compList[index].isFavorite
+                        ? Icon(
+                            Icons.favorite,
+                            size: 28,
+                            color: Colors.red,
+                          )
+                        : Icon(
+                            Icons.favorite_border_outlined,
+                            size: 28,
+                          ),
                     onPressed: () => _onHeartPressed(index),
                   ),
                 ],
@@ -161,8 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.only(top: 6, bottom: 6),
                 child: Text(
                   "${compList[index].content}. 이것은 회사 설명입니다.",
-                  style: TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
               ),
               Row(
@@ -196,22 +190,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget buildItemTag(int index) {
     return Container(
-      padding: EdgeInsets.fromLTRB(
-          5, 1, 5, 1),
+      padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
       margin: EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
-          borderRadius:
-          BorderRadius.circular(
-              10),
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.blue[400],
           )),
-      child: Text("#${compList[index].tag[index]}",
-        style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400
-        ),),
+      child: Text(
+        "#${compList[index].tag[index]}",
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+      ),
     );
   }
-
 }
