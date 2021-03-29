@@ -119,22 +119,41 @@ class _SearchPageState extends State<SearchPage> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(34,16,34,16),
           child: buildTextField("Tag", _searchQuery),
         ),
         Expanded(
           child: _IsSearching
               ? SizedBox(
                   child: Card(
-                    margin: EdgeInsets.only(left: 16, right: 16),
-                    elevation: 10,
+                    margin: EdgeInsets.only(left: 34, right: 34),
+                    elevation: 5,
                     child: ListView(
                       padding: EdgeInsets.symmetric(vertical: 8),
                       children: _buildSearchList(),
                     ),
                   ),
                 )
-              : SizedBox(),
+              : SizedBox(
+            child: Card(
+              margin: EdgeInsets.only(left: 34, right: 34),
+              elevation: 5,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("태그 검색어를 입력해주세요!",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800
+                    ),),
+                    SizedBox(height: 20,),
+                    CircularProgressIndicator()
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(15.0),
