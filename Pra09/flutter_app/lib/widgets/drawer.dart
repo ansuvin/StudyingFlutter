@@ -58,7 +58,7 @@ Widget buildDrawer(BuildContext context) {
           leading: Icon(Icons.assignment),
           onTap: () {
             print("협약 업체로 가자");
-            Navigator.pushNamed(context, "/company");
+            Navigator.pushNamed(context, "/contracting_company");
           },
         ),
         ListTile(
