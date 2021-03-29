@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -153,10 +154,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 width: 331,
                 height: 54,
-                child: Text(
-                  "${notiList[index].content}. 이것은 공지사나? 이야야야야야야야야그럼 안되는디dksl",
+                child: AutoSizeText(
+                  "${notiList[index].content}. 이는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야야야야그럼 안되는디dksl길다 ",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,),
                 overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  minFontSize: 14,
                 ),
               ),
             ),
@@ -197,9 +200,11 @@ class _MyHomePageState extends State<MyHomePage> {
           border: Border.all(
             color: Colors.blue[400],
           )),
-      child: Text(
-        "#${notiList[index].tag[index]}",
-        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+      child: Center(
+        child: Text(
+          "#${notiList[index].tag[index]}",
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+        ),
       ),
     );
   }
