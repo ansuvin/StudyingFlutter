@@ -223,14 +223,14 @@ class _SearchPageState extends State<SearchPage> {
             )),
         child: Row(
           children: [
-            Icon(
-              Icons.remove_circle,
-              size: 10,
-              color: Colors.red,
-            ),
             Text(
               "#${tagList[index]}",
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+            ),
+            Icon(
+              Icons.highlight_remove_rounded,
+              size: 10,
+              color: Colors.red,
             ),
           ],
         ),
