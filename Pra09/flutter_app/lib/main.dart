@@ -107,10 +107,10 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Color(0xffEFEFEF),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(25, 16, 25, 16),
+              padding: EdgeInsets.fromLTRB(25, 25, 25, 16),
               child: Text(
                 "공지사항",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
               ),
             ),
             Expanded(
