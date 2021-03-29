@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button.dart';
 import 'package:flutter_app/widgets/text_field.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SearchApp extends StatelessWidget {
   @override
@@ -62,14 +63,8 @@ class _SearchPageState extends State<SearchPage> {
     init();
   }
 
-  var selectedValue = "";
-
-  onSelecteValue(String value) {
-    selectedValue = value;
-  }
-
   void init() {
-    _list = List();
+    _list = [];
     _list.add("Google");
     _list.add("IOS");
     _list.add("Android");
@@ -111,7 +106,8 @@ class _SearchPageState extends State<SearchPage> {
                       tagList.add(contact);
                     });
                   } else {
-                    print("중복된 아이템 입니다.");
+                    snackBar("중복된 태그입니다.", context);
+                    print("중복된 태그입니다ㅣ");
                   }
                 },
               ))
@@ -208,7 +204,11 @@ class _SearchPageState extends State<SearchPage> {
             )),
         child: Row(
           children: [
-            Icon(Icons.remove_circle,size: 10,color: Colors.red,),
+            Icon(
+              Icons.remove_circle,
+              size: 10,
+              color: Colors.red,
+            ),
             Text(
               "#${tagList[index]}",
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
@@ -218,4 +218,12 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+}
+
+void snackBar(String msg, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(msg),
+    duration: Duration(milliseconds: 1000),
+    backgroundColor: Colors.red[200],
+  ));
 }
