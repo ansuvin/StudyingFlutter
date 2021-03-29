@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      initialRoute: "/contracting_company",
+      initialRoute: "/",
       routes: {
         "/": (context) => MyHomePage(),
         "/contracting_company": (context) => ContractingCompPage(),
@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar("customAppbar"),
+      appBar: buildAppBar("취준타임"),
       drawer: buildDrawer(context),
     );
   }
