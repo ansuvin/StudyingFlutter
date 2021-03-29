@@ -31,6 +31,7 @@ class _SearchPageState extends State<SearchPage> {
   final key = new GlobalKey<ScaffoldState>();
   final TextEditingController _searchQuery = new TextEditingController();
   List<String> _list;
+  List<String> tagList = [];
   bool _IsSearching;
   String _searchText = "";
 
@@ -61,11 +62,17 @@ class _SearchPageState extends State<SearchPage> {
     init();
   }
 
+  var selectedValue = "";
+
+  onSelecteValue(String value) {
+    selectedValue = value;
+  }
+
   void init() {
     _list = List();
     _list.add("Google");
     _list.add("IOS");
-    _list.add("Andorid");
+    _list.add("Android");
     _list.add("Dart");
     _list.add("Flutter");
     _list.add("Python");
@@ -84,9 +91,9 @@ class _SearchPageState extends State<SearchPage> {
         body: buildDropDownTextField());
   }
 
-  List<ChildItem> _buildSearchList() {
+  List<ListTile> _buildSearchList() {
     if (_searchText.isEmpty) {
-      return _list.map((contact) => ChildItem(contact)).toList();
+      return _list.map((contact) => ListTile(title: Text(contact))).toList();
     } else {
       List<String> _searchList = [];
       for (int i = 0; i < _list.length; i++) {
@@ -95,7 +102,20 @@ class _SearchPageState extends State<SearchPage> {
           _searchList.add(name);
         }
       }
-      return _searchList.map((contact) => ChildItem(contact)).toList();
+      return _searchList
+          .map((contact) => ListTile(
+                title: Text(contact),
+                onTap: () {
+                  if (!tagList.contains(contact)) {
+                    setState(() {
+                      tagList.add(contact);
+                    });
+                  } else {
+                    print("중복된 아이템 입니다.");
+                  }
+                },
+              ))
+          .toList();
     }
   }
 
@@ -108,21 +128,14 @@ class _SearchPageState extends State<SearchPage> {
         ),
         Expanded(
           child: _IsSearching
-              ? Container(
-                  width: 350,
-                  margin: EdgeInsets.only(bottom: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10.0,
-                            offset: Offset(0, 5),
-                            color: Colors.grey[500])
-                      ]),
-                  child: ListView(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    children: _buildSearchList(),
+              ? SizedBox(
+                  child: Card(
+                    margin: EdgeInsets.only(left: 16, right: 16),
+                    elevation: 10,
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      children: _buildSearchList(),
+                    ),
                   ),
                 )
               : SizedBox(),
@@ -130,7 +143,7 @@ class _SearchPageState extends State<SearchPage> {
         Padding(
           padding: const EdgeInsets.all(15.0),
           child: SizedBox(
-              height: 45,
+              height: 60,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -148,16 +161,16 @@ class _SearchPageState extends State<SearchPage> {
                     color: Colors.grey[500],
                     margin: EdgeInsets.only(bottom: 5, top: 5),
                   ),
-                  Expanded(
-                    child: SizedBox(
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return buildItemTag(index);
-                          }),
-                    ),
+                  SizedBox(
+                    width: 360,
+                    height: 18,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: tagList.length,
+                        itemBuilder: (context, index) {
+                          return buildItemTag(index);
+                        }),
                   ),
                 ],
               )),
@@ -179,29 +192,30 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget buildItemTag(int index) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
-      margin: EdgeInsets.only(right: 8),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.blue[400],
-          )),
-      child: Text(
-        "#${_list[index]}",
-        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          tagList.removeAt(index);
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
+        margin: EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.blue[400],
+            )),
+        child: Row(
+          children: [
+            Icon(Icons.remove_circle,size: 10,color: Colors.red,),
+            Text(
+              "#${tagList[index]}",
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+            ),
+          ],
+        ),
       ),
     );
-  }
-}
-
-class ChildItem extends StatelessWidget {
-  final String name;
-
-  ChildItem(this.name);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(title: new Text(this.name));
   }
 }
