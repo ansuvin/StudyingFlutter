@@ -61,8 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: buildDrawer(context),
       body: Container(
         color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(26, 18, 26, 18),
@@ -113,15 +112,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: notiList.length,
-                itemBuilder: (context, index) {
-                  return buildItemCompany(context, index);
-                }, 
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,),
-            )
+            ListView.builder(
+              itemCount: notiList.length,
+              itemBuilder: (context, index) {
+                return buildItemCompany(context, index);
+              },
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),)
           ],
         ),
       ),
@@ -153,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.only(top: 6, bottom: 6),
               child: Container(
                 width: 331,
-                height: 54,
+                height: 60,
                 child: AutoSizeText(
                   "${notiList[index].content}. 이는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야야야야그럼 안되는디dksl길다 ",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,),
