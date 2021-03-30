@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class CustomDialog extends StatelessWidget {
+class CustomDialog extends StatefulWidget {
   final String msg, content;
   final Size size;
   final List<String> tag;
-  final bool isFavorite;
+  bool isFavorite;
 
   CustomDialog({
     @required this.msg,
@@ -14,6 +14,13 @@ class CustomDialog extends StatelessWidget {
     @required this.tag,
     @required this.isFavorite,
   });
+
+  @override
+  _CustomDialog createState() => _CustomDialog();
+}
+
+class _CustomDialog extends State<CustomDialog> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +34,16 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
+  _onHeartPressed() {
+    setState(() {
+      widget.isFavorite = !widget.isFavorite;
+    });
+  }
+
   dialogContent(BuildContext context) {
     return Container(
-      width: size.width,
-      height: size.height,
+      width: widget.size.width,
+      height: widget.size.height,
       padding: EdgeInsets.only(
           top: Consts.padding,
           bottom: Consts.padding,
@@ -40,11 +53,12 @@ class CustomDialog extends StatelessWidget {
       decoration: new BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(Consts.padding),
+          borderRadius: BorderRadius.circular(Consts.padding-10),
           boxShadow: [
             BoxShadow(
               color: Colors.black26,
               blurRadius: 10.0,
+              spreadRadius: 1,
               offset: const Offset(0.0, 0.0),
             )
           ]),
@@ -52,12 +66,31 @@ class CustomDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            msg,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  widget.msg,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: widget.isFavorite
+                    ? Icon(
+                  Icons.favorite,
+                  size: 28,
+                  color: Colors.red,
+                )
+                    : Icon(
+                  Icons.favorite_border_outlined,
+                  size: 28,
+                ),
+                onPressed: () => _onHeartPressed(),
+              ),
+            ],
           ),
           SizedBox(
             height: 16,
@@ -66,7 +99,7 @@ class CustomDialog extends StatelessWidget {
             child: ListView(
               children: [
                 AutoSizeText(
-                  content,
+                  widget.content,
                   minFontSize: 16,
                   style: TextStyle(fontSize: 16,),
                 ),
@@ -78,41 +111,35 @@ class CustomDialog extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SizedBox(
-                  height: 60,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                          "태그",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        width: 360,
-                        color: Colors.grey[500],
-                        margin: EdgeInsets.only(bottom: 5, top: 5),
-                      ),
-                      SizedBox(
-                        width: 360,
-                        height: 18,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: tag.length,
-                            itemBuilder: (context, index) {
-                              return buildItemTag(index);
-                            }),
-                      ),
-                    ],
-                  )),
-            ),
+            child: SizedBox(
+                height: 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "태그",
+                      style: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    Container(
+                      height: 1,
+                      width: 360,
+                      color: Colors.grey[500],
+                      margin: EdgeInsets.only(bottom: 5, top: 5),
+                    ),
+                    SizedBox(
+                      width: 360,
+                      height: 18,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: widget.tag.length,
+                          itemBuilder: (context, index) {
+                            return buildItemTag(index);
+                          }),
+                    ),
+                  ],
+                )),
           ),
         ],
       ),
@@ -129,7 +156,7 @@ class CustomDialog extends StatelessWidget {
             color: Colors.blue[400],
           )),
       child: Text(
-        "#${tag[index]}",
+        "#${widget.tag[index]}",
         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
       ),
     );
@@ -139,6 +166,6 @@ class CustomDialog extends StatelessWidget {
 class Consts {
   Consts._();
 
-  static const double padding = 20.0;
-  static const double avataRadius = 66.0;
+  static const double padding = 30.0;
+  static const double avataRadius = 60.0;
 }
