@@ -44,9 +44,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   initNotiList() {
     for (int i = 0; i < 10; i++) {
-      notiList.add(Notification("${i}.title", "내용입니다", "2021.03.19",
-          List.generate(8, (index) => "${index}호잇")));
+      notiList.add(Notification(title: "${i}.title", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", date: "2021.03.19",
+          tag: List.generate(8, (index) => "${index}호잇")));
     }
+  }
+
+  _onHeartPressed(int index) {
+    setState(() {
+      notiList[index].isFavorite = !notiList[index].isFavorite;
+    });
   }
 
   @override
@@ -133,81 +139,107 @@ class _MyHomePageState extends State<MyHomePage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       elevation: 5,
       margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
-      child: Padding(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    "${notiList[index].title}",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6, bottom: 6),
-              child: Container(
-                width: 331,
-                height: 60,
-                child: AutoSizeText(
-                  "${notiList[index].content}. 이는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야야야야그럼 안되는디dksl길다 ",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                  minFontSize: 14,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 22,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => CustomDialog(
+                msg: "${notiList[index].title}",
+                content: "${notiList[index].content}",
+                size: Size(346, 502),
+                tag: notiList[index].tag,
+                isFavorite: notiList[index].isFavorite,
+              ));
+        },
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: List.generate(4, (index) {
-                      return buildItemTag(index);
-                    }),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
-                    margin: EdgeInsets.only(right: 8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Colors.blue[400],
-                        )),
-                    child: Center(
-                      child: Text(
-                        "외 ${notiList[index].tag.length - 4}개",
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w400),
-                      ),
+                  Expanded(
+                    child: Text(
+                      "${notiList[index].title}",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                     ),
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "등록일: ${notiList[index].date}",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w400,
+                  IconButton(
+                    icon: notiList[index].isFavorite
+                        ? Icon(
+                      Icons.favorite,
+                      size: 28,
+                      color: Colors.red,
+                    )
+                        : Icon(
+                      Icons.favorite_border_outlined,
+                      size: 28,
+                    ),
+                    onPressed: () => _onHeartPressed(index),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 6, bottom: 6),
+                child: Container(
+                  width: 331,
+                  height: 60,
+                  child: AutoSizeText(
+                    "${notiList[index].content}, ",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    minFontSize: 14,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 22,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(
+                      children: List.generate(4, (index) {
+                        return buildItemTag(index);
+                      }),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
+                      margin: EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Colors.blue[400],
+                          )),
+                      child: Center(
+                        child: Text(
+                          "외 ${notiList[index].tag.length - 4}개",
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-            )
-          ],
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "등록일: ${notiList[index].date}",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -285,7 +317,8 @@ class Notification {
   String title;
   String content;
   String date;
+  bool isFavorite;
   List<String> tag;
 
-  Notification(this.title, this.content, this.date, this.tag);
+  Notification({@required this.title, @required this.content, @required this.date, @required this.tag, this.isFavorite = false});
 }

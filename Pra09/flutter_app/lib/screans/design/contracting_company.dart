@@ -89,8 +89,7 @@ class _ContractingCompPageState extends State<ContractingCompPage> {
               barrierDismissible: false,
               builder: (BuildContext context) => CustomDialog(
                 msg: "${compList[index].name}. 업체명",
-                description: "${compList[index].content}. 소개",
-                buttonText: "이것은 버튼",
+                content: "${compList[index].content}. 소개",
               ));
         },
         child: Padding(
