@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   initNotiList() {
     for (int i = 0; i < 10; i++) {
       notiList.add(Notification(title: "${i}.title", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", date: "2021.03.19",
-          tag: List.generate(8, (index) => "${index}호잇")));
+          tag: List.generate(8, (index) => "${index}android")));
     }
   }
 

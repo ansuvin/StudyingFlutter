@@ -112,7 +112,7 @@ class _CustomDialog extends State<CustomDialog> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: makeTagWidget(widget.tag, Size(360, 0))
+            child: makeTagWidget(tag: widget.tag, size: Size(360, 50), mode: 2)
           ),
         ],
       ),
