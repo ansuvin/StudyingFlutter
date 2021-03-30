@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/widgets/tag.dart';
 
 class CustomDialog extends StatefulWidget {
   final String msg, content;
@@ -111,35 +112,7 @@ class _CustomDialog extends State<CustomDialog> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: SizedBox(
-                height: 60,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "태그",
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    Container(
-                      height: 1,
-                      width: 360,
-                      color: Colors.grey[500],
-                      margin: EdgeInsets.only(bottom: 5, top: 5),
-                    ),
-                    SizedBox(
-                      width: 360,
-                      height: 18,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: widget.tag.length,
-                          itemBuilder: (context, index) {
-                            return buildItemTag(index);
-                          }),
-                    ),
-                  ],
-                )),
+            child: makeTagList(widget.tag)
           ),
         ],
       ),
