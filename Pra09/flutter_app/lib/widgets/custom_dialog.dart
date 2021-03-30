@@ -112,25 +112,9 @@ class _CustomDialog extends State<CustomDialog> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: makeTagList(widget.tag)
+            child: makeTagWidget(widget.tag, Size(360, 0))
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildItemTag(int index) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
-      margin: EdgeInsets.only(right: 8),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.blue[400],
-          )),
-      child: Text(
-        "#${widget.tag[index]}",
-        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
       ),
     );
   }

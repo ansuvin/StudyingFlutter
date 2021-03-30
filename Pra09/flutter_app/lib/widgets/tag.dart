@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget makeTagList(List<String> tag){
+Widget makeTagWidget(List<String> tag, Size size){
   return SizedBox(
       height: 60,
       child: Column(
@@ -17,19 +17,23 @@ Widget makeTagList(List<String> tag){
             color: Colors.grey[500],
             margin: EdgeInsets.only(bottom: 5, top: 5),
           ),
-          SizedBox(
-            width: 360,
-            height: 18,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: tag.length,
-                itemBuilder: (context, index) {
-                  return buildItemTag(tag, index);
-                }),
-          ),
+          makeTagList(tag, size)
         ],
       ));
+}
+
+Widget makeTagList(List<String> tag, Size size) {
+  return SizedBox(
+    width: size.width,
+    height: 18,
+    child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemCount: tag.length,
+        itemBuilder: (context, index) {
+          return buildItemTag(tag, index);
+        }),
+  );
 }
 
 Widget buildItemTag(List<String> tag,int index) {
