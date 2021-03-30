@@ -43,8 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Notification> notiList = [];
 
   initNotiList() {
-    for(int i=0;i<10;i++) {
-      notiList.add(Notification("${i}.title", "내용입니다", "2021.03.19", List.generate(6, (index) => "${index}태그")));
+    for (int i = 0; i < 10; i++) {
+      notiList.add(Notification("${i}.title", "내용입니다", "2021.03.19",
+          List.generate(8, (index) => "${index}호잇")));
     }
   }
 
@@ -119,7 +120,8 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),)
+              physics: NeverScrollableScrollPhysics(),
+            )
           ],
         ),
       ),
@@ -141,8 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Text(
                     "${notiList[index].title}",
-                    style: TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.w900),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                   ),
                 ),
               ],
@@ -154,34 +155,57 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 60,
                 child: AutoSizeText(
                   "${notiList[index].content}. 이는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야는디dksl길다 것은 공지사나? 이야야야야야야야야그럼 안되는디dksl길다 ",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500,),
-                overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   minFontSize: 14,
                 ),
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                      height: 22,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return buildItemTag(index);
-                          })),
-                ),
-                Text(
-                  "등록일: ${notiList[index].date}",
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
-                )
-              ],
+            SizedBox(
+              height: 22,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(
+                    children: List.generate(4, (index) {
+                      return buildItemTag(index);
+                    }),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
+                    margin: EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.blue[400],
+                        )),
+                    child: Center(
+                      child: Text(
+                        "외 ${notiList[index].tag.length - 4}개",
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "등록일: ${notiList[index].date}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -257,7 +281,7 @@ class SliderCard {
       {@required this.title, @required this.image, @required this.route});
 }
 
-class Notification{
+class Notification {
   String title;
   String content;
   String date;
