@@ -69,7 +69,7 @@ Widget buildDrawer(BuildContext context) {
           ),
           leading: Icon(Icons.account_box_outlined),
           onTap: () {
-            print("취업공고로 가자");
+            Navigator.pushNamedAndRemoveUntil(context, "/company_notice", (route) => false);
           },
         ),
         ListTile(

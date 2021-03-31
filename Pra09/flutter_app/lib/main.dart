@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/company_vo.dart';
+import 'package:flutter_app/screans/design/company_notice.dart';
 import 'package:flutter_app/screans/design/contracting_company.dart';
 import 'package:flutter_app/screans/search_page.dart';
 import 'package:flutter_app/widgets/drop_down_button.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => MyHomePage(),
         "/contracting_company": (context) => ContractingCompPage(),
+        "/company_notice": (context) => CompanyNoticePage(),
       },
       debugShowCheckedModeBanner: false,
     );
@@ -187,7 +189,6 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                 padding: const EdgeInsets.only(top: 6, bottom: 6),
                 child: Container(
-                  width: 331,
                   height: 60,
                   child: AutoSizeText(
                     "${notiList[index].content}, ",
