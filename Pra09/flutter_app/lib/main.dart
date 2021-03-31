@@ -44,7 +44,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   initNotiList() {
     for (int i = 0; i < 10; i++) {
-      notiList.add(Notification(title: "${i}.title", content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", date: "2021.03.19",
+      notiList.add(Notification(
+          title: "${i}.title",
+          content:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+          date: "2021.03.19",
           tag: List.generate(8, (index) => "${index}android")));
     }
   }
@@ -144,12 +148,12 @@ class _MyHomePageState extends State<MyHomePage> {
           showDialog(
               context: context,
               builder: (BuildContext context) => CustomDialog(
-                msg: "${notiList[index].title}",
-                content: "${notiList[index].content}",
-                size: Size(346, 502),
-                tag: notiList[index].tag,
-                isFavorite: notiList[index].isFavorite,
-              ));
+                    msg: "${notiList[index].title}",
+                    content: "${notiList[index].content}",
+                    size: Size(346, 502),
+                    tag: notiList[index].tag,
+                    isFavorite: notiList[index].isFavorite,
+                  ));
         },
         child: Padding(
           padding: EdgeInsets.all(15),
@@ -161,20 +165,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: Text(
                       "${notiList[index].title}",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                     ),
                   ),
                   IconButton(
                     icon: notiList[index].isFavorite
                         ? Icon(
-                      Icons.favorite,
-                      size: 28,
-                      color: Colors.red,
-                    )
+                            Icons.favorite,
+                            size: 28,
+                            color: Colors.red,
+                          )
                         : Icon(
-                      Icons.favorite_border_outlined,
-                      size: 28,
-                    ),
+                            Icons.favorite_border_outlined,
+                            size: 28,
+                          ),
                     onPressed: () => _onHeartPressed(index),
                   ),
                 ],
@@ -284,14 +289,27 @@ Widget makeSlider(List<SliderCard> list) {
                         blurRadius: 3,
                         spreadRadius: 2)
                   ]),
-              child: Center(
-                  child: Text(
-                card.title,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white),
-              )),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    "images/loco.jpg",
+                    fit: BoxFit.cover,
+                    width: 357,
+                    height: 250,
+                    color: Colors.black,
+                    colorBlendMode: BlendMode.softLight,
+
+                  ),
+                  Center(
+                      child: Text(
+                    card.title,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white),
+                  )),
+                ],
+              ),
             );
           });
         }).toList(),
@@ -299,7 +317,7 @@ Widget makeSlider(List<SliderCard> list) {
           autoPlayAnimationDuration: Duration(seconds: 2),
           autoPlayInterval: Duration(seconds: 4),
           autoPlayCurve: Curves.ease,
-          autoPlay: true,
+          //autoPlay: true,
           height: 150,
         )),
   );
@@ -321,5 +339,10 @@ class Notification {
   bool isFavorite;
   List<String> tag;
 
-  Notification({@required this.title, @required this.content, @required this.date, @required this.tag, this.isFavorite = false});
+  Notification(
+      {@required this.title,
+      @required this.content,
+      @required this.date,
+      @required this.tag,
+      this.isFavorite = false});
 }
