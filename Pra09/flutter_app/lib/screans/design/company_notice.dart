@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screans/design/company_notice_detail.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/drawer.dart';
 import 'package:flutter_app/widgets/tag.dart';
@@ -87,7 +88,11 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
       elevation: 5,
       margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => CompanyNoticeDetailPage()
+          ));
+        },
         child: Padding(
           padding: EdgeInsets.all(15),
           child: Column(
