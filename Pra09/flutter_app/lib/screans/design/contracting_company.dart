@@ -84,13 +84,6 @@ class _ContractingCompPageState extends State<ContractingCompPage> {
           setState(() {
             selected = !selected;
           });
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) => CustomDialog(
-                msg: "${compList[index].name}. 업체명",
-                content: "${compList[index].content}. 소개",
-              ));
         },
         child: Padding(
           padding: EdgeInsets.all(15),

@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Row(
-                      children: List.generate(4, (index) {
+                      children: List.generate(2, (index) {
                         return buildItemTag(index);
                       }),
                     ),
@@ -216,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           )),
                       child: Center(
                         child: Text(
-                          "외 ${notiList[index].tag.length - 4}개",
+                          "외 ${notiList[index].tag.length - 2}개",
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.w400),
                         ),
@@ -297,7 +297,8 @@ Widget makeSlider(List<SliderCard> list) {
         }).toList(),
         options: CarouselOptions(
           autoPlayAnimationDuration: Duration(seconds: 2),
-          autoPlayInterval: Duration(seconds: 3),
+          autoPlayInterval: Duration(seconds: 4),
+          autoPlayCurve: Curves.ease,
           autoPlay: true,
           height: 150,
         )),
