@@ -2,9 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screans/design/company_notice_detail.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
+import 'package:flutter_app/widgets/button.dart';
 import 'package:flutter_app/widgets/drawer.dart';
 import 'package:flutter_app/widgets/tag.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:kopo/kopo.dart';
 
 class CompanyNoticePage extends StatefulWidget {
   @override
@@ -54,6 +56,15 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
         color: Colors.white,
         child: ListView(
           children: [
+            makeBtn(msg: "주소 찾자", onPressed: () async {
+              KopoModel model = await Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Kopo()));
+              if (model != null) {
+                print("result =${model.address}");
+                setState(() {
+                  widget.notiList[0].title = model.address;
+                });
+              }
+              }, mode: 2),
             Padding(
               padding: EdgeInsets.all(26),
               child: Column(
