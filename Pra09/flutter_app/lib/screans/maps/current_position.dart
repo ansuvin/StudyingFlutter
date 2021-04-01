@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -64,3 +65,4 @@ class GeoLocatorService {
 }
 
 final Map<String, Marker> _markers = {};
+*/

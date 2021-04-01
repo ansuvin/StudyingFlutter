@@ -6,7 +6,6 @@ import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button.dart';
 import 'package:flutter_app/widgets/tag.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CompanyNoticeDetailPage extends StatefulWidget {
   final CompNotice list;
@@ -23,6 +22,7 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
   _onBookMarkPressed() {
     setState(() {
       widget.list.isBookMark = !widget.list.isBookMark;
+      print(widget.list.isBookMark);
     });
   }
 
@@ -127,15 +127,7 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                         SizedBox(
                           width: 330,
                           height: 200,
-                          child: GoogleMap(
-                            onMapCreated: _onMapCreated,
-                            initialCameraPosition: CameraPosition(
-                              target: LatLng(widget.position.latitude,
-                                  widget.position.longitude),
-                              zoom: 15,
-                            ),
-                            markers: _markers.values.toSet(),
-                          ),
+                          child: Container(color: Colors.black,)
                         )
                       ],
                     ),
@@ -271,20 +263,4 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
       ),
     );
   }
-
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    setState(() {
-      final marker = Marker(
-        markerId: MarkerId("업체명"),
-        position: LatLng(widget.position.latitude, widget.position.longitude),
-        infoWindow: InfoWindow(
-          title: "업체명",
-          snippet: "서울 어딘가 어디로 어디빌딩 3층",
-        ),
-      );
-      _markers["업체명"] = marker;
-    });
-  }
 }
-
-final Map<String, Marker> _markers = {};

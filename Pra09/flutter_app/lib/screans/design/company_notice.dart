@@ -17,6 +17,7 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
   @override
   void initState() {
     super.initState();
+    initList();
   }
 
   initList() {
@@ -39,6 +40,7 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
   _onBookMarkPressed(int index) {
     setState(() {
       widget.notiList[index].isBookMark = !widget.notiList[index].isBookMark;
+      print(widget.notiList[index].isBookMark);
     });
   }
 
