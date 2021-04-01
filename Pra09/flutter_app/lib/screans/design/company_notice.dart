@@ -4,6 +4,7 @@ import 'package:flutter_app/screans/design/company_notice_detail.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/drawer.dart';
 import 'package:flutter_app/widgets/tag.dart';
+import 'package:geolocator/geolocator.dart';
 
 class CompanyNoticePage extends StatefulWidget {
   @override
@@ -90,7 +91,7 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
       child: GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
-              builder: (context) => CompanyNoticeDetailPage()
+              builder: (context) => CompanyNoticeDetailPage(Position(latitude: 35.14308033695434, longitude:126.79995306383273))
           ));
         },
         child: Padding(

@@ -141,7 +141,7 @@ Widget buildDrawer(BuildContext context) {
               SizedBox(
                 height: 8,
               ),
-              makeBtn(msg: "로그아웃", onPressed: () => print("로그아웃 눌림"), mode: 1, icon: Icon(Icons.exit_to_app, color: Colors.white,))
+              makeBtn(msg: "로그아웃", onPressed: () => Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false), mode: 1, icon: Icon(Icons.exit_to_app, color: Colors.white,))
             ],
           ),
         ),
