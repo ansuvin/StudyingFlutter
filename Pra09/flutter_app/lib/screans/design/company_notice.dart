@@ -22,11 +22,17 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
   initList() {
     for (int i = 0; i < 8; i++) {
       widget.notiList.add(CompNotice(
-          "$i.title",
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-          "2021.03.31",
-          false,
-          List.generate(8, (index) => "$index.tag")));
+          title: "${i}.title",
+          startDate: "2021.03.31",
+          endDate: "2021.04.01",
+          field: "모바일 앱, 웹",
+          address: "서울 어딘가 어디로 어디빌딩",
+          compInfo:
+              "회사 소개Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
+          preferentialInfo:
+              "우대 조건 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
+          isBookMark: false,
+          tag: List.generate(10, (i) => "${i}.tag")));
     }
   }
 
@@ -69,10 +75,10 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
               ),
             ),
             ListView.builder(
-                itemCount: widget.notiList.length,
-                itemBuilder: (context, index) {
-                  return buildItemCompany(context, index);
-                },
+              itemCount: widget.notiList.length,
+              itemBuilder: (context, index) {
+                return buildItemCompany(context, index);
+              },
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: ScrollPhysics(),
@@ -90,9 +96,12 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
       margin: EdgeInsets.fromLTRB(25, 13, 25, 13),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(
-              builder: (context) => CompanyNoticeDetailPage(Position(latitude: 35.14308033695434, longitude:126.79995306383273))
-          ));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CompanyNoticeDetailPage(list: widget.notiList[index] ,position: Position(
+                      latitude: 35.14308033695434,
+                      longitude: 126.79995306383273))));
         },
         child: Padding(
           padding: EdgeInsets.all(15),
@@ -128,7 +137,7 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
                 child: Container(
                   height: 60,
                   child: AutoSizeText(
-                    "${widget.notiList[index].content}, ",
+                    "${widget.notiList[index].compInfo}, ",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -170,7 +179,7 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "마감일: ${widget.notiList[index].date}",
+                          "마감일: ${widget.notiList[index].endDate}",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
@@ -192,10 +201,24 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
 
 class CompNotice {
   String title;
-  String content;
-  String date;
+  String startDate, endDate;
+  String field;
+  String address;
+  String compInfo;
+  String preferentialInfo;
+  String etc;
   bool isBookMark;
   List<String> tag;
 
-  CompNotice(this.title, this.content, this.date, this.isBookMark, this.tag);
+  CompNotice(
+      {@required this.title,
+      @required this.startDate,
+      @required this.endDate,
+      @required this.field,
+      @required this.address,
+      @required this.compInfo,
+      @required this.preferentialInfo,
+      this.etc = "",
+      @required this.isBookMark,
+      @required this.tag});
 }

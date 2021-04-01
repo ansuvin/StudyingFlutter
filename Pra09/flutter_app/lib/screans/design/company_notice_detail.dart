@@ -8,13 +8,11 @@ import 'package:flutter_app/widgets/tag.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 class CompanyNoticeDetailPage extends StatefulWidget {
-  CompNotice list =
-      CompNotice("title", "content", "date", true, ["a0", "nc", "df"]);
+  final CompNotice list;
   Position position;
 
-  CompanyNoticeDetailPage(this.position);
+  CompanyNoticeDetailPage({this.list, this.position});
 
   @override
   _CompanyNoticeDetailPageState createState() =>
@@ -27,8 +25,6 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
       widget.list.isBookMark = !widget.list.isBookMark;
     });
   }
-
-  String content = "호잉";
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +56,7 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                           children: [
                             Expanded(
                               child: Text(
-                                "업체명",
+                                widget.list.title,
                                 style: TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.w600),
                               ),
@@ -81,17 +77,17 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                           ],
                         ),
                         Text(
-                          "채용분야: 모바일 앱, 웹",
+                          "채용분야: ${widget.list.field}",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "공고일: 2021.03.19",
+                          "공고일: ${widget.list.startDate}",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "마감일: 2021.04.32",
+                          "마감일: ${widget.list.endDate}",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w500),
                         ),
@@ -115,24 +111,27 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("주소",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600
-                        ),),
-                        Text("서울 어딘가 어디로 어디빌딩 3층",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400
-                        ),),
-                        SizedBox(height: 13,),
+                        Text(
+                          "주소",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          widget.list.address,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          height: 13,
+                        ),
                         SizedBox(
                           width: 330,
                           height: 200,
                           child: GoogleMap(
                             onMapCreated: _onMapCreated,
                             initialCameraPosition: CameraPosition(
-                              target: LatLng(widget.position.latitude, widget.position.longitude),
+                              target: LatLng(widget.position.latitude,
+                                  widget.position.longitude),
                               zoom: 15,
                             ),
                             markers: _markers.values.toSet(),
@@ -158,13 +157,16 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("회사 설명",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600
-                        ),),
-                        SizedBox(height: 10,),
-                        AutoSizeText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the r",
+                        Text(
+                          "회사 설명",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        AutoSizeText(
+                          widget.list.compInfo,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
@@ -191,13 +193,16 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("우대 조건",
+                        Text(
+                          "우대 조건",
                           style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600
-                          ),),
-                        SizedBox(height: 10,),
-                        AutoSizeText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the r",
+                              fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        AutoSizeText(
+                          widget.list.preferentialInfo,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
@@ -209,43 +214,55 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                   ),
                 ),
               ),
-              content != "" ?
-              Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                margin: EdgeInsets.all(25),
-                child: Container(
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("기타",
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600
-                          ),),
-                        SizedBox(height: 10,),
-                        AutoSizeText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the r",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
+              widget.list.etc != ""
+                  ? Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      margin: EdgeInsets.all(25),
+                      child: Container(
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "기타",
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              AutoSizeText(
+                                widget.list.etc,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                minFontSize: 18,
+                              )
+                            ],
                           ),
-                          minFontSize: 18,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ) : SizedBox(),
-              makeTagWidget(tag: List.generate(10, (i) => "${i}.tag"), size: Size(360, 20), mode: 1),
-              SizedBox(height: 30,),
+                        ),
+                      ),
+                    )
+                  : SizedBox(height: 25,),
+              makeTagWidget(
+                  tag: widget.list.tag,
+                  size: Size(360, 20),
+                  mode: 1),
+              SizedBox(
+                height: 30,
+              ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 30, bottom: 25),
-                  child: makeGradientBtn(msg: "해당 기업에 지원 신청", onPressed: () => print("신청"), mode: 2),
+                  child: makeGradientBtn(
+                      msg: "해당 기업에 지원 신청",
+                      onPressed: () => print("신청"),
+                      mode: 2),
                 ),
               )
             ],
