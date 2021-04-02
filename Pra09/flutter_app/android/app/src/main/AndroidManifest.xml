@@ -1,10 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_app">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="flutter_app"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+       android:usesCleartextTraffic="false">
+       <uses-library android:name="org..apache.http.legacy"
+           android:required="false" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -39,9 +43,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <meta-data
-           android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyDDfVj7nPHdd_6YOW-FoTC6PpEjgBDBxCU" />
 
        <meta-data
            android:name="com.kakao.sdk.AppKey" android:value="98d65be799a1f167004e612d38a35201" />

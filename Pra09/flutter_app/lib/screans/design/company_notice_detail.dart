@@ -5,6 +5,8 @@ import 'package:flutter_app/screans/design/company_notice.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button.dart';
 import 'package:flutter_app/widgets/tag.dart';
+import 'package:flutter_kakao_map/flutter_kakao_map.dart';
+import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
 import 'package:geolocator/geolocator.dart';
 
 class CompanyNoticeDetailPage extends StatefulWidget {
@@ -19,6 +21,19 @@ class CompanyNoticeDetailPage extends StatefulWidget {
 }
 
 class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
+  KakaoMapController mapController;
+  MapPoint _visibleRegion = MapPoint(37.5087553, 127.0632877);
+  CameraPosition _kInitialPosition =
+      CameraPosition(target: MapPoint(37.5087553, 127.0632877), zoom: 5);
+
+  void onMapCreated(KakaoMapController controller) async {
+    final MapPoint visibleRegion = await controller.getMapCenterPoint();
+    setState(() {
+      mapController = controller;
+      _visibleRegion = visibleRegion;
+    });
+  }
+
   _onBookMarkPressed() {
     setState(() {
       widget.list.isBookMark = !widget.list.isBookMark;
@@ -125,10 +140,11 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                           height: 13,
                         ),
                         SizedBox(
-                          width: 330,
-                          height: 200,
-                          child: Container(color: Colors.black,)
-                        )
+                            width: 330,
+                            height: 200,
+                            child: KakaoMap(
+                                onMapCreated: onMapCreated,
+                                initialCameraPosition: _kInitialPosition))
                       ],
                     ),
                   ),
@@ -239,11 +255,10 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                         ),
                       ),
                     )
-                  : SizedBox(height: 25,),
-              makeTagWidget(
-                  tag: widget.list.tag,
-                  size: Size(360, 20),
-                  mode: 1),
+                  : SizedBox(
+                      height: 25,
+                    ),
+              makeTagWidget(tag: widget.list.tag, size: Size(360, 25), mode: 1),
               SizedBox(
                 height: 30,
               ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/model/company_vo.dart';
 import 'package:flutter_app/screans/design/company_notice.dart';
 import 'package:flutter_app/screans/design/contracting_company.dart';
+import 'package:flutter_app/screans/retrofit.dart';
 import 'package:flutter_app/screans/search_page.dart';
 import 'package:flutter_app/widgets/drop_down_button.dart';
 import 'widgets/custom_dialog.dart';
@@ -19,11 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      initialRoute: "/",
+      initialRoute: "/retrofit",
       routes: {
         "/": (context) => MyHomePage(),
         "/contracting_company": (context) => ContractingCompPage(),
         "/company_notice": (context) => CompanyNoticePage(),
+        "/retrofit": (context) => RetrofitScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
