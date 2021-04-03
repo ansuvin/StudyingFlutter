@@ -29,6 +29,14 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     });
   }
 
+  postRetrofit() {
+    Future.microtask(() async {
+      final resp = await client.postCourse({"name":"안녕"});
+
+      print("post: ${resp.toJson()}");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +48,7 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
               child: Text("눌러라"),
                 onPressed: () {
               getRetrofit();
+              postRetrofit();
             }),
           ],
         ),

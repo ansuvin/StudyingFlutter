@@ -14,6 +14,10 @@ abstract class RestClient {
   @GET("/")
   Future<String> getHello();
 
+  @POST("/api/courses")
+  Future<Course> postCourse(
+      @Body() Map<String, dynamic> body);
+
 }
 
 @JsonSerializable()
