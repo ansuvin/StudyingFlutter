@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/retrofit/rest_client.dart';
+import 'package:flutter_app/retrofit/RestClient.dart';
+import 'package:flutter_app/widgets/app_bar.dart';
+
 
 class RetrofitScreen extends StatefulWidget {
   @override
@@ -17,55 +19,31 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     Dio dio = Dio();
 
     client = RestClient(dio);
-
-    Future.microtask(() async {
-      final resp = await client.getTopNews();
-    });
   }
 
-  renderNewsCard({@required News news}) {
-    return Card(
-      child: Column(
-        children: [
-          Text(news.id.toString()),
-          Text(news.title),
-          Text(news.url)
-        ],
-      ),
-    );
+  getRetrofit() {
+    Future.microtask(() async {
+      final resp = await client.getCourses();
+
+      print("resp: ${resp[2].name}");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: client.getTopNews(),
-        initialData: [],
-        builder: (_, AsyncSnapshot snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-
-      final List<int> ids = snapshot.data;
-
-      return ListView.builder(
-        itemCount: ids.length,
-        itemBuilder: ( _, index) {
-        return FutureBuilder(
-          future: client.getNewsDetail(id: ids[index]),
-          builder: ( _, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            return renderNewsCard(news: snapshot.data);
-          },
-
-        );
-      },);
-    });
+    return Scaffold(
+      appBar: buildAppBar("title"),
+      body: Center(
+        child: Column(
+          children: [
+            RaisedButton(
+              child: Text("눌러라"),
+                onPressed: () {
+              getRetrofit();
+            }),
+          ],
+        ),
+      ),
+    );
   }
 }
