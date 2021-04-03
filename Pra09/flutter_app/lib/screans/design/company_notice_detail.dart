@@ -5,15 +5,15 @@ import 'package:flutter_app/screans/design/company_notice.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button.dart';
 import 'package:flutter_app/widgets/tag.dart';
-import 'package:flutter_kakao_map/flutter_kakao_map.dart';
-import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CompanyNoticeDetailPage extends StatefulWidget {
   final CompNotice list;
   Position position;
 
-  CompanyNoticeDetailPage({this.list, this.position});
+  CompanyNoticeDetailPage({this.list});
 
   @override
   _CompanyNoticeDetailPageState createState() =>
@@ -21,24 +21,24 @@ class CompanyNoticeDetailPage extends StatefulWidget {
 }
 
 class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
-  KakaoMapController mapController;
-  MapPoint _visibleRegion = MapPoint(37.5087553, 127.0632877);
-  CameraPosition _kInitialPosition =
-      CameraPosition(target: MapPoint(37.5087553, 127.0632877), zoom: 5);
-
-  void onMapCreated(KakaoMapController controller) async {
-    final MapPoint visibleRegion = await controller.getMapCenterPoint();
-    setState(() {
-      mapController = controller;
-      _visibleRegion = visibleRegion;
-    });
-  }
+  LatLng latLng;
 
   _onBookMarkPressed() {
     setState(() {
       widget.list.isBookMark = !widget.list.isBookMark;
       print(widget.list.isBookMark);
     });
+  }
+
+  Future<LatLng> getCordinate() async {
+    List<Location> location = await locationFromAddress(widget.list.address);
+    latLng = LatLng(location[0].latitude, location[0].longitude);
+    return latLng;
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -142,9 +142,23 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
                         SizedBox(
                             width: 330,
                             height: 200,
-                            child: KakaoMap(
-                                onMapCreated: onMapCreated,
-                                initialCameraPosition: _kInitialPosition))
+                            child: FutureBuilder(
+                                future: getCordinate(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.hasData == false) {
+                                    return CircularProgressIndicator();
+                                  } else {
+                                    return GoogleMap(
+                                      initialCameraPosition: CameraPosition(
+                                        target: LatLng(
+                                            latLng.latitude, latLng.longitude),
+                                        zoom: 17,
+                                      ),
+                                      markers: _createMarker(),
+                                    );
+                                  }
+                                }))
                       ],
                     ),
                   ),
@@ -277,5 +291,15 @@ class _CompanyNoticeDetailPageState extends State<CompanyNoticeDetailPage> {
         ),
       ),
     );
+  }
+
+  Set<Marker> _createMarker() {
+    return [
+      Marker(
+          markerId: MarkerId(widget.list.title),
+          position: latLng,
+          infoWindow: InfoWindow(
+              title: widget.list.title, snippet: widget.list.address))
+    ].toSet();
   }
 }

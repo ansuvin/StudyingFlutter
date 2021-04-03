@@ -29,7 +29,7 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
           startDate: "2021.03.31",
           endDate: "2021.04.01",
           field: "모바일 앱, 웹",
-          address: "서울 어딘가 어디로 어디빌딩",
+          address: "광주광역시 광산구 목련로 273번길 76",
           compInfo:
               "회사 소개Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
           preferentialInfo:
@@ -56,15 +56,6 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
         color: Colors.white,
         child: ListView(
           children: [
-            makeBtn(msg: "주소 찾자", onPressed: () async {
-              KopoModel model = await Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Kopo()));
-              if (model != null) {
-                print("result =${model.address}");
-                setState(() {
-                  widget.notiList[0].title = model.address;
-                });
-              }
-              }, mode: 2),
             Padding(
               padding: EdgeInsets.all(26),
               child: Column(
@@ -112,9 +103,7 @@ class _CompanyNoticePageState extends State<CompanyNoticePage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => CompanyNoticeDetailPage(list: widget.notiList[index] ,position: Position(
-                      latitude: 35.14308033695434,
-                      longitude: 126.79995306383273))));
+                  builder: (context) => CompanyNoticeDetailPage(list: widget.notiList[index] )));
         },
         child: Padding(
           padding: EdgeInsets.all(15),
