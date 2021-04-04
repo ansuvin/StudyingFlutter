@@ -4,7 +4,6 @@ import 'package:flutter_app/retrofit/RestClient.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/text_field.dart';
 
-
 class RetrofitScreen extends StatefulWidget {
   @override
   _RetrofitScreenState createState() => _RetrofitScreenState();
@@ -32,7 +31,7 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
 
   postCourse() {
     Future.microtask(() async {
-      final resp = await client.postCourse({"name":controller.text});
+      final resp = await client.postCourse({"name": controller.text});
 
       print("post: ${resp.toJson()}");
     });
@@ -46,16 +45,20 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     });
   }
 
-  Future<List<Todo>> getTodos() async {
+  getTodos() async {
     await Future.microtask(() async {
       final resp = await client.getTodos();
+    });
+  }
 
-      print("getTodos");
-      for (int i=0; i<resp.length; i++) {
-        print("${resp[i].toJson()}");
-      }
+  updateIsComplete(bool isComplete, int id) {
+    Future.microtask(() async {
+      await client.putTodo(id+1, {"isComplete": !isComplete});
 
-      return resp.toList();
+      print(!isComplete);
+    });
+    setState(() {
+      getTodos();
     });
   }
 
@@ -68,48 +71,63 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
       body: Center(
         child: Column(
           children: [
-            Padding(padding: EdgeInsets.all(25),
+            Padding(
+              padding: EdgeInsets.all(25),
               child: buildTextField("써라", controller),
             ),
             RaisedButton(
-              child: Text("눌러라"),
+                child: Text("눌러라"),
                 onPressed: () {
-              getTodos();
-            }),
-            SizedBox(height: 10,),
+                  client.postTodo({"title": controller.text});
+                }),
+            SizedBox(
+              height: 10,
+            ),
             Expanded(
               child: FutureBuilder(
-                future: client.getTodos(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  print("호잇: ${snapshot.data}");
-                  if (snapshot.hasData) {
-                    List<Todo> data = snapshot.data;
-                    return ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (_, int index) {
-                          return Card(
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)
-                              ),
-                              margin: EdgeInsets.all(10),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ListTile(
-                                  title: Text("${data[index].id}. ${data[index].title}"),
-                                  trailing: data[index].isComplete
-                                      ? Icon(Icons.check_circle)
-                                      : Icon(Icons.highlight_remove),
-                                ),
-                              )
-                          );
-                        });
-                  }
-                  else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }
-              ),
+                  future: client.getTodos(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      List<Todo> data = snapshot.data;
+                      return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (_, int index) {
+                            return Card(
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                margin: EdgeInsets.all(10),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ListTile(
+                                    title: Text(
+                                        "${data[index].id}. ${data[index].title}"),
+                                    trailing: data[index].isComplete
+                                        ? IconButton(
+                                            icon: Icon(
+                                              Icons.check_circle,
+                                              color: Colors.blue,
+                                            ),
+                                            onPressed: () {
+                                              updateIsComplete(true, index);
+                                            },
+                                          )
+                                        : IconButton(
+                                            icon: Icon(
+                                              Icons.highlight_remove_sharp,
+                                              color: Colors.red,
+                                            ),
+                                            onPressed: () {
+                                              updateIsComplete(false, index);
+                                            },
+                                          ),
+                                  ),
+                                ));
+                          });
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }),
             )
           ],
         ),

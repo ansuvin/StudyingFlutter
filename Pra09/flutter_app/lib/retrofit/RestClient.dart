@@ -26,6 +26,17 @@ abstract class RestClient {
 
   @GET("/api/todos")
   Future<List<Todo>> getTodos();
+
+  @POST("/api/todos/")
+  Future<Todo> postTodo(
+      @Body() Map<String, dynamic> body
+      );
+
+  @PUT("/api/todos/{id}/isComplete")
+  Future<Todo> putTodo(
+      @Path("id") int id,
+      @Body() Map<String, dynamic> body
+      );
 }
 
 @JsonSerializable()
