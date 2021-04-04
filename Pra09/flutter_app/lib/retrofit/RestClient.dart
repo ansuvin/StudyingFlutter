@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 part 'RestClient.g.dart';
 
-@RestApi(baseUrl: "https://c0b11cb68020.ngrok.io")
+@RestApi(baseUrl: "https://2db48182bb6f.ngrok.io")
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
@@ -17,6 +17,12 @@ abstract class RestClient {
   @POST("/api/courses")
   Future<Course> postCourse(
       @Body() Map<String, dynamic> body);
+
+  @PUT("/api/courses/{id}")
+  Future<Course> putCourse(
+      @Path("id") int id,
+      @Body() Map<String, dynamic> body
+      );
 
 }
 

@@ -38,6 +38,14 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     });
   }
 
+  putRetrofit() {
+    Future.microtask(() async {
+      final resp = await client.putCourse(2, {"name": controller.text});
+
+      print("put: ${resp.toJson()}");
+    });
+  }
+
   TextEditingController controller = TextEditingController();
 
   @override
@@ -53,8 +61,7 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
             RaisedButton(
               child: Text("눌러라"),
                 onPressed: () {
-              getRetrofit();
-              postRetrofit();
+              putRetrofit();
             }),
           ],
         ),
