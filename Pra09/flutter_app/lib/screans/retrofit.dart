@@ -48,6 +48,10 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
   getTodos() async {
     await Future.microtask(() async {
       final resp = await client.getTodos();
+
+      for(int i=0;i<resp.length;i++) {
+        print(resp[i].toJson());
+      }
     });
   }
 
@@ -61,6 +65,14 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
       getTodos();
     });
   }
+
+  postTodo(String title) async {
+    await client.postTodo({"title": controller.text});
+    setState(() {
+      getTodos();
+    });
+  }
+  
 
   TextEditingController controller = TextEditingController();
 
@@ -78,7 +90,7 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
             RaisedButton(
                 child: Text("눌러라"),
                 onPressed: () {
-                  client.postTodo({"title": controller.text});
+                  postTodo(controller.text);
                 }),
             SizedBox(
               height: 10,
