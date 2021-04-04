@@ -24,6 +24,8 @@ abstract class RestClient {
       @Body() Map<String, dynamic> body
       );
 
+  @GET("/api/todos")
+  Future<List<Todo>> getTodos();
 }
 
 @JsonSerializable()
@@ -36,4 +38,17 @@ class Course {
   factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CourseToJson(this);
+}
+
+@JsonSerializable()
+class Todo {
+  String title;
+  int id;
+  bool isComplete;
+
+  Todo({this.title, this.id, this.isComplete});
+
+  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TodoToJson(this);
 }

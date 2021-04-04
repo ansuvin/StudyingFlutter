@@ -18,6 +18,20 @@ Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
       'id': instance.id,
     };
 
+Todo _$TodoFromJson(Map<String, dynamic> json) {
+  return Todo(
+    title: json['title'] as String,
+    id: json['id'] as int,
+    isComplete: json['isComplete'] as bool,
+  );
+}
+
+Map<String, dynamic> _$TodoToJson(Todo instance) => <String, dynamic>{
+      'title': instance.title,
+      'id': instance.id,
+      'isComplete': instance.isComplete,
+    };
+
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
@@ -104,6 +118,25 @@ class _RestClient implements RestClient {
             baseUrl: baseUrl),
         data: _data);
     final value = Course.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<List<Todo>> getTodos() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<List<dynamic>>('/api/todos',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    var value = _result.data
+        .map((dynamic i) => Todo.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 }
