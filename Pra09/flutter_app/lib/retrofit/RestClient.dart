@@ -37,6 +37,11 @@ abstract class RestClient {
       @Path("id") int id,
       @Body() Map<String, dynamic> body
       );
+
+  @DELETE("/api/todos/{id}")
+  Future<Todo> deleteTodo(
+      @Path("id") int id
+      );
 }
 
 @JsonSerializable()

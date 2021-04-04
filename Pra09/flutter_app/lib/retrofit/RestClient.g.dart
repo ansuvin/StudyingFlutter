@@ -179,4 +179,22 @@ class _RestClient implements RestClient {
     final value = Todo.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<Todo> deleteTodo(id) async {
+    ArgumentError.checkNotNull(id, 'id');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('/api/todos/$id',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Todo.fromJson(_result.data);
+    return value;
+  }
 }

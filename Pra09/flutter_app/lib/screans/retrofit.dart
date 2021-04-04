@@ -72,7 +72,13 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
       getTodos();
     });
   }
-  
+
+  deleteTodo(int id) async {
+    await client.deleteTodo(id);
+    setState(() {
+      getTodos();
+    });
+  }
 
   TextEditingController controller = TextEditingController();
 
@@ -112,6 +118,13 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: ListTile(
+                                    leading: IconButton(
+                                      icon: Icon(Icons.restore_from_trash),
+                                      color: Colors.grey,
+                                      onPressed: () {
+                                        deleteTodo(data[index].id);
+                                      },
+                                    ),
                                     title: Text(
                                         "${data[index].id}. ${data[index].title}"),
                                     trailing: data[index].isComplete
