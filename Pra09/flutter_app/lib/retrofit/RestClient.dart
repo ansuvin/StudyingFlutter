@@ -27,7 +27,7 @@ abstract class RestClient {
   @GET("/api/todos")
   Future<List<Todo>> getTodos();
 
-  @POST("/api/todos/")
+  @POST("/api/todos")
   Future<Todo> postTodo(
       @Body() Map<String, dynamic> body
       );

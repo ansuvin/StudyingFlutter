@@ -147,7 +147,7 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('/api/todos/',
+    final _result = await _dio.request<Map<String, dynamic>>('/api/todos',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
