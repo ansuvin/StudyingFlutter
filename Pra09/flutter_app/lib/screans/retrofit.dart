@@ -4,6 +4,7 @@ import 'package:flutter_app/retrofit/RestClient.dart';
 import 'package:flutter_app/retrofit/RetrofitHelper.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RetrofitScreen extends StatefulWidget {
   @override
@@ -14,16 +15,15 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
   RestClient client;
   RetrofitHelper retrofitHelper;
   var todoList;
+  String accessToken;
 
   @override
   void initState() {
     super.initState();
 
     Dio dio = Dio();
-
     client = RestClient(dio);
-
-    todoList = client.getTodos();
+    // todoList = client.getTodos();
 
     retrofitHelper = RetrofitHelper(dio);
 
@@ -100,6 +100,14 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     var resp = await retrofitHelper.postLogin(MemberLoginDTO(memberEmail: "dkstnqls0925@naver.com", memberPassword: "123456789!!").toJson());
     print("login눌렸음 ${resp.toJson()}");
     print("눌림 ${resp.data.toJson()}");
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('accessToken', resp.data.accessToken);
+  }
+
+  readAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    accessToken = prefs.getString('accessToken') ?? null;
   }
 
   TextEditingController controller = TextEditingController();
