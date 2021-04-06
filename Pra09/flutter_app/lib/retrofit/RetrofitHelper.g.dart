@@ -3,86 +3,6 @@
 part of 'RetrofitHelper.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-MemberDTO _$MemberDTOFromJson(Map<String, dynamic> json) {
-  return MemberDTO(
-    memberClassNumber: json['memberClassNumber'] as String,
-    memberEmail: json['memberEmail'] as String,
-    memberPassword: json['memberPassword'] as String,
-  );
-}
-
-Map<String, dynamic> _$MemberDTOToJson(MemberDTO instance) => <String, dynamic>{
-      'memberClassNumber': instance.memberClassNumber,
-      'memberEmail': instance.memberEmail,
-      'memberPassword': instance.memberPassword,
-    };
-
-Response _$ResponseFromJson(Map<String, dynamic> json) {
-  return Response(
-    code: json['code'] as int,
-    msg: json['msg'] as String,
-    success: json['success'] as bool,
-  );
-}
-
-Map<String, dynamic> _$ResponseToJson(Response instance) => <String, dynamic>{
-      'code': instance.code,
-      'msg': instance.msg,
-      'success': instance.success,
-    };
-
-MemberLoginDTO _$MemberLoginDTOFromJson(Map<String, dynamic> json) {
-  return MemberLoginDTO(
-    memberEmail: json['memberEmail'] as String,
-    memberPassword: json['memberPassword'] as String,
-  );
-}
-
-Map<String, dynamic> _$MemberLoginDTOToJson(MemberLoginDTO instance) =>
-    <String, dynamic>{
-      'memberEmail': instance.memberEmail,
-      'memberPassword': instance.memberPassword,
-    };
-
-ResponseLogin _$ResponseLoginFromJson(Map<String, dynamic> json) {
-  return ResponseLogin(
-    code: json['code'] as int,
-    data: json['data'] == null
-        ? null
-        : Data.fromJson(json['data'] as Map<String, dynamic>),
-    msg: json['msg'] as String,
-    success: json['success'] as bool,
-  );
-}
-
-Map<String, dynamic> _$ResponseLoginToJson(ResponseLogin instance) =>
-    <String, dynamic>{
-      'code': instance.code,
-      'data': instance.data,
-      'msg': instance.msg,
-      'success': instance.success,
-    };
-
-Data _$DataFromJson(Map<String, dynamic> json) {
-  return Data(
-    accessToken: json['accessToken'] as String,
-    memberClassNumber: json['memberClassNumber'] as String,
-    memberEmail: json['memberEmail'] as String,
-    roles: json['roles'] as String,
-  );
-}
-
-Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'memberClassNumber': instance.memberClassNumber,
-      'memberEmail': instance.memberEmail,
-      'roles': instance.roles,
-    };
-
-// **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
@@ -97,7 +17,7 @@ class _RetrofitHelper implements RetrofitHelper {
   String baseUrl;
 
   @override
-  Future<Response> postJoin(body) async {
+  Future<ResponseData> postJoin(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -111,7 +31,7 @@ class _RetrofitHelper implements RetrofitHelper {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Response.fromJson(_result.data);
+    final value = ResponseData.fromJson(_result.data);
     return value;
   }
 

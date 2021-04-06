@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      initialRoute: "/shared",
+      initialRoute: "/retrofit",
       routes: {
         "/": (context) => MyHomePage(),
         "/contracting_company": (context) => ContractingCompPage(),

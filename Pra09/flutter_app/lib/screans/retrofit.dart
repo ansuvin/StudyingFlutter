@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/retrofit/RestClient.dart';
 import 'package:flutter_app/retrofit/RetrofitHelper.dart';
+import 'package:flutter_app/retrofit/dto.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
