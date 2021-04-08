@@ -20,15 +20,15 @@ Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
 
 Todo _$TodoFromJson(Map<String, dynamic> json) {
   return Todo(
-    title: json['title'] as String,
-    id: json['id'] as int,
+    name: json['title'] as String,
+    num: json['id'] as int,
     isComplete: json['isComplete'] as bool,
   );
 }
 
 Map<String, dynamic> _$TodoToJson(Todo instance) => <String, dynamic>{
-      'title': instance.title,
-      'id': instance.id,
+      'title': instance.name,
+      'id': instance.num,
       'isComplete': instance.isComplete,
     };
 

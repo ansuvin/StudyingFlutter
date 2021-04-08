@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 part 'RestClient.g.dart';
 
-@RestApi(baseUrl: "https://2db48182bb6f.ngrok.io")
+@RestApi(baseUrl: "https://344479ad7a42.ngrok.io")
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
@@ -58,11 +58,14 @@ class Course {
 
 @JsonSerializable()
 class Todo {
-  String title;
-  int id;
+  @JsonKey(name: 'title')
+  String name;
+  @JsonKey(name: 'id')
+  int num;
+  @JsonKey(name: 'isComplete')
   bool isComplete;
 
-  Todo({this.title, this.id, this.isComplete});
+  Todo({this.name, this.num, this.isComplete});
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 

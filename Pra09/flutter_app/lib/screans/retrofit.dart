@@ -24,9 +24,9 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
 
     Dio dio = Dio();
     client = RestClient(dio);
-    // todoList = client.getTodos();
+    todoList = client.getTodos();
 
-    retrofitHelper = RetrofitHelper(dio);
+    //retrofitHelper = RetrofitHelper(dio);
 
   }
 
