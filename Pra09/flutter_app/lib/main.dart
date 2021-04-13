@@ -2,17 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/model/company_vo.dart';
 import 'package:flutter_app/screans/design/company_notice.dart';
 import 'package:flutter_app/screans/design/contracting_company.dart';
+import 'package:flutter_app/screans/file_downloader.dart';
 import 'package:flutter_app/screans/retrofit.dart';
-import 'package:flutter_app/screans/search_page.dart';
 import 'package:flutter_app/screans/shared_preferences.dart';
-import 'package:flutter_app/widgets/drop_down_button.dart';
 import 'widgets/custom_dialog.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/drawer.dart';
-import 'widgets/text_field.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,13 +18,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      initialRoute: "/retrofit",
+      initialRoute: "/fild_downloader",
       routes: {
         "/": (context) => MyHomePage(),
         "/contracting_company": (context) => ContractingCompPage(),
         "/company_notice": (context) => CompanyNoticePage(),
         "/retrofit": (context) => RetrofitScreen(),
         "/shared": (context) => ExSharedPreferences(),
+        "/fild_downloader": (context) => FileDownLoaderPage(),
       },
       debugShowCheckedModeBanner: false,
     );

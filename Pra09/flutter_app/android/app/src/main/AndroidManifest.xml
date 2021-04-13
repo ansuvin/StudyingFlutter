@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
    <application
         android:label="flutter_app"
         android:icon="@mipmap/ic_launcher"
@@ -47,5 +48,14 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDDfVj7nPHdd_6YOW-FoTC6PpEjgBDBxCU" />
+       <provider
+           android:authorities="${applicationId}.flutter_downloader.provider"
+           android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
+           android:exported="false"
+           android:grantUriPermissions="true" >
+           <meta-data
+               android:name="android.support.FILE_PROVIDER_PATHS"
+               android:resource="@xml/provider_paths"   />
+       </provider>
     </application>
 </manifest>
