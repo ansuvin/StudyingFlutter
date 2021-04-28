@@ -9,7 +9,7 @@ part of 'RetrofitHelper.dart';
 class _RetrofitHelper implements RetrofitHelper {
   _RetrofitHelper(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.137.47:8080/v1';
+    baseUrl ??= 'https://jsonplaceholder.typicode.com';
   }
 
   final Dio _dio;
@@ -51,6 +51,26 @@ class _RetrofitHelper implements RetrofitHelper {
             baseUrl: baseUrl),
         data: _data);
     final value = ResponseLogin.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<List<CommentDTO>> getComment(postId) async {
+    ArgumentError.checkNotNull(postId, 'postId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'postId': postId};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<List<dynamic>>('/comments',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    var value = _result.data
+        .map((dynamic i) => CommentDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 }

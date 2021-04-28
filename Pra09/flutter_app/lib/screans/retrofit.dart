@@ -23,11 +23,10 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     super.initState();
 
     Dio dio = Dio();
-    client = RestClient(dio);
-    todoList = client.getTodos();
+    // client = RestClient(dio);
+    // todoList = client.getTodos();
 
-    //retrofitHelper = RetrofitHelper(dio);
-
+    retrofitHelper = RetrofitHelper(dio);
   }
 
   getCourse() {
@@ -58,7 +57,7 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     await Future.microtask(() async {
       final resp = await client.getTodos();
 
-      for(int i=0;i<resp.length;i++) {
+      for (int i = 0; i < resp.length; i++) {
         print(resp[i].toJson());
       }
     });
@@ -66,7 +65,7 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
 
   updateIsComplete(bool isComplete, int id) {
     Future.microtask(() async {
-      await client.putTodo(id+1, {"isComplete": !isComplete});
+      await client.putTodo(id + 1, {"isComplete": !isComplete});
 
       print(!isComplete);
     });
@@ -91,14 +90,21 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
 
   postJoin() async {
     print("눌림00");
-    var resp = await retrofitHelper.postJoin(MemberDTO(memberClassNumber: "3210", memberEmail: "dkstnqls0925@naver.com", memberPassword: "123456789!!").toJson());
+    var resp = await retrofitHelper.postJoin(MemberDTO(
+            memberClassNumber: "3210",
+            memberEmail: "dkstnqls0925@naver.com",
+            memberPassword: "123456789!!")
+        .toJson());
     print("눌렸음");
     print(resp.toJson());
   }
 
   postLogin() async {
     print("login눌림");
-    var resp = await retrofitHelper.postLogin(MemberLoginDTO(memberEmail: "dkstnqls0925@naver.com", memberPassword: "123456789!!").toJson());
+    var resp = await retrofitHelper.postLogin(MemberLoginDTO(
+            memberEmail: "dkstnqls0925@naver.com",
+            memberPassword: "123456789!!")
+        .toJson());
     print("login눌렸음 ${resp.toJson()}");
     print("눌림 ${resp.data.toJson()}");
 
@@ -111,6 +117,14 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
     accessToken = prefs.getString('accessToken') ?? null;
   }
 
+  getComment() async {
+    print("눌려요");
+    var resp = await retrofitHelper.getComment(2);
+    for(int i=0; i<resp.length; i++) {
+      print(resp[i].toJson());
+    }
+  }
+
   TextEditingController controller = TextEditingController();
 
   @override
@@ -120,6 +134,10 @@ class _RetrofitScreenState extends State<RetrofitScreen> {
       body: Center(
         child: Column(
           children: [
+            RaisedButton(
+              onPressed: getComment,
+              child: Text("눌러요"),
+            ),
             Padding(
               padding: EdgeInsets.all(25),
               child: buildTextField("써라", controller),

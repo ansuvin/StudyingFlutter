@@ -1,22 +1,20 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_app/retrofit/comment_dto.dart';
 import 'package:flutter_app/retrofit/dto.dart';
+import 'package:retrofit/retrofit.dart';
 
 part 'RetrofitHelper.g.dart';
 
-@RestApi(baseUrl: "http://192.168.137.47:8080/v1")
+@RestApi(baseUrl: "https://jsonplaceholder.typicode.com")
 abstract class RetrofitHelper {
   factory RetrofitHelper(Dio dio, {String baseUrl}) = _RetrofitHelper;
 
   @POST("/join")
-  Future<ResponseData> postJoin(
-      @Body() Map<String, dynamic> body
-      );
+  Future<ResponseData> postJoin(@Body() Map<String, dynamic> body);
 
   @POST("/login")
-  Future<ResponseLogin> postLogin(
-      @Body() Map<String, dynamic> body
-      );
-}
+  Future<ResponseLogin> postLogin(@Body() Map<String, dynamic> body);
 
+  @GET("/comments")
+  Future<List<CommentDTO>> getComment(@Query("postId") int postId);
+}

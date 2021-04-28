@@ -39,7 +39,7 @@ Map<String, dynamic> _$TodoToJson(Todo instance) => <String, dynamic>{
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://2db48182bb6f.ngrok.io';
+    baseUrl ??= 'https://344479ad7a42.ngrok.io';
   }
 
   final Dio _dio;
