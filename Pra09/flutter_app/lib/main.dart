@@ -5,27 +5,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/screans/design/company_notice.dart';
 import 'package:flutter_app/screans/design/contracting_company.dart';
 import 'package:flutter_app/screans/file_downloader.dart';
+import 'package:flutter_app/screans/file_downloader2.dart';
 import 'package:flutter_app/screans/retrofit.dart';
 import 'package:flutter_app/screans/shared_preferences.dart';
-import 'widgets/custom_dialog.dart';
-import 'widgets/app_bar.dart';
-import 'widgets/drawer.dart';
+import 'package:flutter_app/widgets/app_bar.dart';
+import 'package:flutter_app/widgets/custom_dialog.dart';
+import 'package:flutter_app/widgets/drawer.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
-void main() => runApp(MyApp());
+const debug = true;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(debug: debug);
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      initialRoute: "/fild_downloader",
+      initialRoute: "/retrofit",
       routes: {
         "/": (context) => MyHomePage(),
         "/contracting_company": (context) => ContractingCompPage(),
         "/company_notice": (context) => CompanyNoticePage(),
         "/retrofit": (context) => RetrofitScreen(),
         "/shared": (context) => ExSharedPreferences(),
-        "/fild_downloader": (context) => FileDownLoaderPage(),
+        "/file_downloader": (context) => FileDownLoaderPage(),
+        "/file_downloader_2": (context) => FileDownLoaderPage2(),
       },
       debugShowCheckedModeBanner: false,
     );
