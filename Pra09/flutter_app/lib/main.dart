@@ -6,6 +6,7 @@ import 'package:flutter_app/screans/design/company_notice.dart';
 import 'package:flutter_app/screans/design/contracting_company.dart';
 import 'package:flutter_app/screans/file_downloader.dart';
 import 'package:flutter_app/screans/file_downloader2.dart';
+import 'package:flutter_app/screans/fingerprint.dart';
 import 'package:flutter_app/screans/login.dart';
 import 'package:flutter_app/screans/retrofit.dart';
 import 'package:flutter_app/screans/shared_preferences.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pra 09",
-      initialRoute: "/login",
+      initialRoute: "/fingerprint",
       routes: {
         "/": (context) => MyHomePage(),
         "/contracting_company": (context) => ContractingCompPage(),
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         "/file_downloader": (context) => FileDownLoaderPage(),
         "/file_downloader_2": (context) => FileDownLoaderPage2(),
         "/login": (context) => LoginPage(),
+        "/fingerprint": (context) => FingerPrintPage(),
       },
       debugShowCheckedModeBanner: false,
     );
