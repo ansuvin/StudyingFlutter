@@ -33,13 +33,40 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   RetrofitHelper helper;
   List<PostVO> postList = [];
-  
+  int itemCount = 10;
+  bool bottomFlag = false;
+
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     initRetrofit();
+    _scrollController.addListener(() async {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        await Future.delayed(Duration(seconds: 1));
+        setState(() {
+          if (itemCount == 100) {
+            print(bottomFlag);
+            _scrollController.animateTo(
+                _scrollController.position.minScrollExtent,
+                duration: Duration(milliseconds: 200),
+                curve: Curves.easeOut);
+          } else {
+            itemCount += 10;
+          }
+        });
+      }
+    });
   }
-  
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   initRetrofit() {
     Dio dio = Dio(BaseOptions(
         connectTimeout: 5 * 1000,
@@ -58,22 +85,33 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: FutureBuilder(
-          future: _getPosts(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              postList = snapshot.data;
-              return ListView.builder(itemBuilder: (context, index) {
-                return itemPost(context, index);
-              });
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }
-        )
-      ),
+          child: FutureBuilder(
+              future: _getPosts(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  postList = snapshot.data;
+                  return ListView.builder(
+                      controller: _scrollController,
+                      itemCount: itemCount + 1,
+                      itemBuilder: (context, index) {
+                        if (index == itemCount) {
+                          return Card(
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          );
+                        }
+                        return itemPost(context, index);
+                      });
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              })),
     );
   }
 
@@ -98,9 +136,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("작성자: ${postList[index].userId}"),
+            Text("작성자: ${postList[index].userId}, 번호: ${postList[index].id}"),
             Text("제목: ${postList[index].title}"),
-            Text("내용: ${postList[index].body}", maxLines: 3, overflow: TextOverflow.ellipsis,)
+            Text(
+              "내용: ${postList[index].body}",
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            )
           ],
         ),
       ),
