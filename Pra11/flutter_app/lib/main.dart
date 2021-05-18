@@ -33,8 +33,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   RetrofitHelper helper;
   List<PostVO> postList = [];
-  int itemCount = 10;
-  bool bottomFlag = false;
+  final showItemCount = 8;
+  int itemCount = 8;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -47,14 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
           _scrollController.position.maxScrollExtent) {
         await Future.delayed(Duration(seconds: 1));
         setState(() {
-          if (itemCount == 100) {
-            print(bottomFlag);
-            _scrollController.animateTo(
-                _scrollController.position.minScrollExtent,
-                duration: Duration(milliseconds: 200),
-                curve: Curves.easeOut);
-          } else {
-            itemCount += 10;
+          if (itemCount != postList.length) {
+            if ((postList.length - itemCount) ~/ showItemCount <= 0) {
+              itemCount += postList.length % showItemCount;
+            } else {
+              itemCount += showItemCount;
+            }
           }
         });
       }
@@ -94,11 +92,34 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: _scrollController,
                       itemCount: itemCount + 1,
                       itemBuilder: (context, index) {
+                        print(
+                            "index: $index, postList.length: ${postList.length}");
                         if (index == itemCount) {
+                          if (index == postList.length) {
+                            return Card(
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: RaisedButton(
+                                    child: Text("맨 처음으로"),
+                                    onPressed: () {
+                                      print("처음으로!!");
+                                      _scrollController.animateTo(
+                                          _scrollController
+                                              .position.minScrollExtent,
+                                          duration: Duration(milliseconds: 200),
+                                          curve: Curves.elasticOut);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
                           return Card(
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 15),
                                 child: CircularProgressIndicator(),
                               ),
                             ),
